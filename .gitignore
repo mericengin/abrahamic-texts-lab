@@ -1,0 +1,11 @@
+# Raw third-party texts stay out of git: each has its own license (see SOURCES.md).
+# Re-create them with scripts/fetch_sources.py.
+data/raw/
+data/processed/
+
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+.env
+node_modules/
