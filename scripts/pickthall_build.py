@@ -104,6 +104,109 @@ def token_vote(reads: list[str]):
     return voted if close >= 2 else None
 
 
+FURNITURE = re.compile(r"(?i)^(?:\S{0,6}rah|[^\w\s]{0,2}[a-z0-9^{}<>()~|]{0,4}rah|sur\.?|sura|surah|koran|glorious|\d{1,3}[,.:;]?|[ivxlc1l|]{1,4}[,.:;]?|i\.?e\.?|[ivxlc1]+[,.]?)$")
+
+
+def clean_furniture(text: str, ref: str) -> str:
+    """Remove page furniture (running headers, footnote references, page numbers) that leaked into a verse.
+    Only tokens that the Gutenberg verse does not have, that sit at the start or end of the text or form a run containing a furniture token, are removed.
+    Every word that matches or replaces a word of the verse is kept."""
+    import difflib
+    tk = lambda w: re.sub(r"[^a-z]", "", w.lower())
+    t, g = text.split(), ref.split()
+    sm = difflib.SequenceMatcher(None, [tk(w) for w in g], [tk(w) for w in t], autojunk=False)
+    keep = [True] * len(t)
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag != "insert":
+            continue
+        run = t[j1:j2]
+        at_edge = j1 == 0 or j2 == len(t)
+        has_furniture = any(FURNITURE.match(w) or "koran" in w.lower() or "rah" in w.lower() for w in run)
+        if not at_edge and len(run) >= 8:
+            for k in range(j1, j2):      # a long run in the middle of a verse is a footnote; at the end it may be a real continuation, so that is left alone
+                keep[k] = False
+        elif (at_edge and has_furniture) or (has_furniture and len(run) >= 1 and (len(run) >= 4 or all(FURNITURE.match(w) for w in run))):
+            for k in range(j1, j2):
+                keep[k] = False
+        elif at_edge and j1 != 0 and len(run) >= 1 and all(len(tk(w)) <= 2 or not tk(w) for w in run):
+            for k in range(j1, j2):
+                keep[k] = False
+    return " ".join(w for w, k in zip(t, keep) if k)
+
+
+def load_page_words():
+    """Word list of the fresh page-by-page OCR of the 1930 scan (a modern engine reading the same page images), for repairing isolated slips."""
+    d = ROOT_DIR / "data" / "processed" / "ocr" / "english-quran-pickthall-pages"
+    if not d.exists():
+        return None
+    words = []
+    for n in range(1, 711):
+        f = d / f"page-{n:03d}.txt"
+        if f.exists():
+            words += re.sub(r"-\s*\n\s*", "", f.read_text(encoding="utf-8")).split()
+    keyw = [re.sub(r"[^a-z]", "", w.lower()) for w in words]
+    idx: dict = {}
+    for i in range(len(keyw) - 2):
+        idx.setdefault((keyw[i], keyw[i + 1], keyw[i + 2]), []).append(i)
+    return words, keyw, idx
+
+
+def repair_slips(text: str, pages, vocab: Counter) -> tuple[str, int]:
+    """Replace an isolated garbled token (rare in the book) by the aligned token of the fresh page OCR when that token is a well-attested word
+    (at least 3 uses in verses the scans agree on) and the two differ by at most two letters. Nothing else is changed."""
+    import difflib
+    words, keyw, idx = pages
+    t = text.split()
+    tk = lambda w: re.sub(r"[^a-z]", "", w.lower())
+    g = [tk(w) for w in t]
+    if len(g) < 4:
+        return text, 0
+    best = None
+    for st in idx.get(tuple(g[:3]), []):
+        win = keyw[st: st + len(g) + 40]
+        sm = difflib.SequenceMatcher(None, g, win, autojunk=False)
+        m = sum(b.size for b in sm.get_matching_blocks())
+        if best is None or m > best[0]:
+            best = (m, st, sm)
+    if best is None or best[0] / len(g) < 0.85:
+        return text, 0
+    _, st, sm = best
+    changed = 0
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "replace" and i2 - i1 == j2 - j1:
+            for k in range(i2 - i1):
+                ours, theirs = t[i1 + k], words[st + j1 + k]
+                ko, kt = tk(ours), tk(theirs)
+                if vocab[ko] < 3 and vocab[kt] >= 3 and ko and kt and difflib.SequenceMatcher(None, ko, kt).ratio() >= 0.7:
+                    # keep our punctuation, take the other spelling
+                    lead = re.match(r"^\W*", ours).group(0)
+                    tail = re.search(r"\W*$", ours).group(0)
+                    t[i1 + k] = lead + re.sub(r"^\W+|\W+$", "", theirs) + tail
+                    changed += 1
+    return " ".join(t), changed
+
+
+def repair_with_gutenberg(text: str, gtext: str, vocab: Counter) -> tuple[str, int]:
+    """A token that is rare in the book and absent from the Gutenberg verse, aligned one-to-one with a Gutenberg token that is a common word and
+    one or two letters away, is a shared OCR slip (for example 'causech' for 'causeth'): take the Gutenberg token. Spelling variants are kept
+    because they are not rare words."""
+    import difflib
+    tk = lambda w: re.sub(r"[^a-z]", "", w.lower())
+    t, g = text.split(), gtext.split()
+    sm = difflib.SequenceMatcher(None, [tk(w) for w in g], [tk(w) for w in t], autojunk=False)
+    changed = 0
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "replace" and i2 - i1 == j2 - j1:
+            for k in range(i2 - i1):
+                ko, kg = tk(t[j1 + k]), tk(g[i1 + k])
+                if ko and kg and vocab[ko] < 3 and vocab[kg] >= 3 and difflib.SequenceMatcher(None, ko, kg).ratio() >= 0.8:
+                    lead = re.match(r"^\W*", t[j1 + k]).group(0)
+                    tail = re.search(r"\W*$", t[j1 + k]).group(0)
+                    t[j1 + k] = lead + re.sub(r"^\W+|\W+$", "", g[i1 + k]) + tail
+                    changed += 1
+    return " ".join(t), changed
+
+
 def sura_starts(letters: str, idx: list[int], guten, gkeys, offs):
     """Raw-text position near each sura's first verse, from the anchor chain."""
     gfull = "".join(gkeys[r] for r in sorted(guten))
@@ -219,6 +322,26 @@ def main() -> int:
     same = sum(1 for x in rows if x["gutenberg_identical"])
     report.update({"verses": len(rows), "verdicts": dict(verdicts), "identical_to_gutenberg_pickthall": same,
                    "differs_from_gutenberg": sum(1 for x in rows if x["verdict"] in ("agreed", "pair") and not x["gutenberg_identical"])})
+    for x in rows:   # remove leaked page furniture from every reading-based verse
+        if x["text"] and x["verdict"] in ("agreed", "pair", "voted", "split", "single"):
+            x["text"] = clean_furniture(x["text"], guten[(x["sura"], x["verse"])])
+    for x in rows:   # line-break hyphens left by the scans ("punish¬ ment")
+        x["text"] = re.sub(r"\s*¬\s*", "", x["text"])
+    pages_ = load_page_words()
+    if pages_:
+        vocab = Counter(re.sub(r"[^a-z]", "", w.lower()) for x in rows if x["verdict"] == "agreed" for w in x["text"].split())
+        repaired = 0
+        for x in rows:
+            if x["verdict"] in ("agreed", "pair", "voted") and x["text"]:
+                x["text"], c = repair_slips(x["text"], pages_, vocab)
+                repaired += c
+        report["slips_repaired_from_fresh_ocr"] = repaired
+        g_rep = 0
+        for x in rows:
+            if x["verdict"] in ("agreed", "pair", "voted") and x["text"]:
+                x["text"], c = repair_with_gutenberg(x["text"], guten[(x["sura"], x["verse"])], vocab)
+                g_rep += c
+        report["slips_repaired_from_gutenberg_token"] = g_rep
     # --- second line of evidence: the alignment check (pickthall_reconcile.py) confirms a verse when two or more scans match the Gutenberg wording word for word
     chk_path = OUT / "pickthall-1930-check.json"
     chk = {(c["sura"], c["verse"]): c for c in json.loads(chk_path.read_text())} if chk_path.exists() else {}

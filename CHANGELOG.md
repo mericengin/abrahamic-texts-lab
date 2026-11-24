@@ -26,6 +26,8 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 - Page-by-page English OCR of the 1930 scan (`ocr_pdf.py --lang eng`) and `scripts/pickthall_pages.py` to find each verse's page; the 38 hardest verses were read against the page images and recorded in a local `image-checks.json` that the build applies first.
 
+- `scripts/pickthall_pageocr_check.py` and clean-up passes in `pickthall_build.py` (page furniture, broken hyphens, isolated OCR slips repaired from the fresh page OCR and the Gutenberg token).
+
 ### Found
 - Gutenberg's Pickthall text is cut short in places (8:72, 2:85) and has words the 1930 book lacks or lacks words it has (20:109); the 1930 print itself has a misprint at 5:89.
 - **The Project Gutenberg #16955 "Pickthall" is not the 1930 text** (593 verses differ where three or more scans agree), so it is no longer used.

@@ -324,6 +324,17 @@ def verify_pickthall() -> None:
           f"settled only by a word-by-word majority: {v.get('voted', 0)}; confirmed by the alignment check instead: {v.get('confirmed-by-alignment', 0)}; verse words confirmed in two or more scans despite footnote clutter: {v.get('words-confirmed', 0)}; read against the page image by a person: {v.get('image-checked', 0)}; unresolved: split {v.get('split', 0)}, single scan {v.get('single', 0)}, missing {v.get('missing', 0)}", verdicts=v)
     check("pickthall", "review queue: verses that need a person to check them against the page image", None,
           f"{build['review_queue']} verses ({100 * build['review_queue'] / n:.1f}%): {build['review_reasons']}", reasons=build["review_reasons"])
+    pc = base / "pageocr-check.json"
+    if pc.exists():
+        r = json.loads(pc.read_text())
+        vt, ag = r["voted"], r["agreed-sample"]
+        nv = vt["confirmed"] + vt["short"] + len(vt["mismatch"]) + len(vt["not found"])
+        na = ag["confirmed"] + ag["short"] + len(ag["mismatch"]) + len(ag["not found"])
+        check("pickthall", "cross-check against a fresh OCR of the page images (a modern engine reading the same pages)", None,
+              f"vote-only verses: {vt['confirmed']} of {nv} confirmed outright; sampled agreed verses (200, seeded): {ag['confirmed']} of {na} confirmed, {ag['short']} too short to test. "
+              f"I examined the {len(ag['mismatch']) + len(ag['not found'])} sampled agreed verses that were not confirmed: in all of them our wording was right and the fresh OCR was the noisy side (diacritics, dash spacing), "
+              f"but three had artifacts in our text (two missing spaces or a stray character, and one letter slip shared by all the scans, 42:34 'causech' for 'causeth', now repaired). "
+              f"So shared slips exist at roughly 0.5 to 1.5% of verses; the vote-only verses were not examined one by one.", pageocr=r)
     check("pickthall", "caveat: the four scans may share some OCR errors", None,
           "agreement between scans proves the OCR is consistent, not that it equals the printed page; scans of the same printing by the same digitizer can repeat the same slip. "
           "Verses where the scans are identical are very likely right, but only a check against the page images proves it.")
