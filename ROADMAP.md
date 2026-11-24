@@ -88,7 +88,8 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [x] Owner confirms the English Qur'an layer: Pickthall 1930 (confirmed 2026-11-24)
 - [x] Obtain the Pickthall scan and its OCR text (downloaded 2026-11-24; the PDF is image-only, the archive OCR is good)
 - [x] Rebuild the Pickthall 1930 text from the OCR of four scans by vote (`scripts/pickthall_build.py`): 96% of verses decided by agreement; numbering map built (the 1930 book numbers 483 verses differently from the standard)
-- [ ] Check the 38 queued Pickthall verses (and a random sample of agreed ones) against the page images
+- [x] Check the 38 hardest Pickthall verses against the page images (done: for example 2:85 and 8:72 are longer in the 1930 book than in Gutenberg, 20:109 lacks the word 'word', 5:89 has a printer's misprint 'whch')
+- [ ] Check the 119 Pickthall verses settled only by a word-by-word vote, and a random sample of the agreed verses, against the page images
 - [x] Compare the Project Gutenberg #16955 Pickthall lines with the 1930 text: they are NOT the 1930 text (593 verses where three or more scans agree on a different wording); the Gutenberg lines are not used
 - [x] Owner confirms the German Qur'an layer: Henning 1901 (confirmed 2026-11-24)
 - [x] Obtain the Henning scan (downloaded 2026-11-24)

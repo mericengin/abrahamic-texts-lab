@@ -281,6 +281,17 @@ def main() -> int:
     verdicts = Counter(x["verdict"] for x in rows)
     report["resolved_by_second_evidence"] = dict(resolved_by)
     report["verdicts"] = {k: v for k, v in verdicts.items() if v}
+    # --- verses a person has read against the page image (data/processed/pickthall/image-checks.json): these decisions win over everything else
+    ic_path = OUT / "image-checks.json"
+    ic = json.loads(ic_path.read_text()) if ic_path.exists() else {}
+    for x in rows:
+        e = ic.get(f"{x['sura']}:{x['verse']}")
+        if e:
+            x["text"] = guten[(x["sura"], x["verse"])] if e["text"] == "GUTENBERG" else e["text"]
+            x["verdict"], x["image_check"] = "image-checked", {"pdf_pages": e["pdf_pages"], "note": e["note"]}
+    verdicts = Counter(x["verdict"] for x in rows)
+    report["verdicts"] = {k: v for k, v in verdicts.items() if v}
+    report["image_checked"] = len(ic)
     # --- numbering map: the number printed in the 1930 book for each standard verse (majority over the scans)
     printed: dict[str, Counter] = {}
     for sc in report["scans"].values():
@@ -302,7 +313,7 @@ def main() -> int:
         why = None
         if x["verdict"] in ("split", "single", "missing"):
             why = x["verdict"]
-        elif x["verdict"] in ("confirmed-by-alignment", "pair-with-gutenberg", "words-confirmed"):
+        elif x["verdict"] in ("confirmed-by-alignment", "pair-with-gutenberg", "words-confirmed", "image-checked"):
             why = None
         elif tlen > glen * 1.35 + 25:
             why = "text much longer than Gutenberg (page furniture or a footnote may have leaked in)"
