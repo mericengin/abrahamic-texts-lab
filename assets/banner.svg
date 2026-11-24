@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 360" width="1440" height="360" role="img" aria-labelledby="t d">
-  <title id="t">Comparative Text Analysis of the Abrahamic Traditions</title>
-  <desc id="d">Three arcs link points on a line, beside the title "Comparative Text Analysis of the Abrahamic Traditions" and the list: Hebrew Bible, New Testament, Qur'an, Dead Sea Scrolls, Gnostic writings.</desc>
+  <title id="t">Abrahamic Texts Lab</title>
+  <desc id="d">Three arcs link points on a line, beside the title "Abrahamic Texts Lab" and the subtitle "Comparative Text Analysis of the Abrahamic Traditions and Writings".</desc>
   <rect x="1" y="1" width="1438" height="358" rx="36" fill="#0f151c" stroke="#1f2b34" stroke-width="2"/>
 
   <!-- icon -->
@@ -18,10 +18,10 @@
     </g>
   </g>
 
-  <!-- title -->
+  <!-- title and subtitle -->
   <g font-family="-apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
-    <text x="352" y="150" font-size="66" font-weight="700" letter-spacing="-1.5" fill="#e8edf2">Comparative Text Analysis</text>
-    <text x="352" y="224" font-size="66" font-weight="700" letter-spacing="-1.5" fill="#e8b45a">of the Abrahamic Traditions</text>
-    <text x="355" y="282" font-size="25" font-weight="500" fill="#98a4b0">Hebrew Bible · New Testament · Qur'an · Dead Sea Scrolls · Gnostic writings</text>
+    <text x="350" y="172" font-size="100" font-weight="700" letter-spacing="-2.5" fill="#e8edf2">Abrahamic Texts <tspan fill="#e8b45a">Lab</tspan></text>
+    <text x="354" y="234" font-size="38" font-weight="500" fill="#98a4b0">Comparative Text Analysis of</text>
+    <text x="354" y="282" font-size="38" font-weight="500" fill="#98a4b0">the Abrahamic Traditions and Writings</text>
   </g>
 </svg>

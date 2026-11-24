@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Abrahamic Texts Lab: Comparative Text Analysis of the Abrahamic Traditions" width="100%">
+  <img src="assets/banner.svg" alt="Abrahamic Texts Lab: Comparative Text Analysis of the Abrahamic Traditions and Writings" width="100%">
 </p>
 
 <p align="center"><b>A free, open research workspace for reading the Abrahamic texts side by side, computationally, and saying plainly what the evidence does and does not show.</b></p>
