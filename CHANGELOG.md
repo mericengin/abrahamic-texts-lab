@@ -31,6 +31,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - Completeness pass in `pickthall_build.py`: verses that run across a page break had lost their continuation (a bug in my first rebuild that also affected the Gutenberg text); the build now finds the verse in the fresh page OCR and appends the missing words when a page header marks the break or the sentence is plainly unfinished; narrower footnote removal; recorded text fixes (`text-fixes.json`).
 
 - 12 more vote-only Pickthall verses read against the page images (the image-checks file now has 51 entries) and about 30 recorded cosmetic fixes (`text-fixes.json`); the review queue is empty.
+- 29 more Pickthall verses read against the page images (image-checks now 80 entries): fixed stray footnote marks and dash artifacts (24:4, 37:62, 71:23, 38:48, 30:58 and 11 em-dash joins). Still open: about 23 verses carry a stray `^` OCR mark not yet checked against the page; 93 verses rest on a vote only (88 confirmed by fresh OCR).
 
 ### Found
 - Reading the vote-only verses found real errors in the vote (2:259, 5:3, 9:110/9:111, 73:20, 6:93); vote-only text is the least reliable group.
