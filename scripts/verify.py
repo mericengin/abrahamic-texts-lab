@@ -313,7 +313,7 @@ def verify_pickthall() -> None:
     build = json.loads((base / "build-report.json").read_text())
     v = build["verdicts"]
     n = build["verses"]
-    decided = v.get("agreed", 0) + v.get("pair", 0)
+    decided = v.get("agreed", 0) + v.get("pair", 0) + v.get("confirmed-by-alignment", 0) + v.get("pair-with-gutenberg", 0)
     check("pickthall", "the Project Gutenberg #16955 Pickthall lines are the 1930 text", False,
           f"they match the 1930 scans word for word in {build['identical_to_gutenberg_pickthall']:,} of {n:,} verses ({100 * build['identical_to_gutenberg_pickthall'] / n:.1f}%); "
           f"in {build['differs_from_gutenberg']:,} verses three or more scans agree on a different wording (for example 2:57 'We wronged them not' against 'they wronged Us not'; "
@@ -321,7 +321,7 @@ def verify_pickthall() -> None:
           identical=build["identical_to_gutenberg_pickthall"], differs=build["differs_from_gutenberg"])
     check("pickthall", "1930 text rebuilt from four scans of the book: verses decided by agreement between scans", None,
           f"{v.get('agreed', 0):,} verses identical in three or more scans, {v.get('pair', 0):,} identical in two; decided {decided:,} of {n:,} ({100 * decided / n:.1f}%); "
-          f"settled only by a word-by-word majority: {v.get('voted', 0)}; unresolved: split {v.get('split', 0)}, single scan {v.get('single', 0)}, missing {v.get('missing', 0)}", verdicts=v)
+          f"settled only by a word-by-word majority: {v.get('voted', 0)}; confirmed by the alignment check instead: {v.get('confirmed-by-alignment', 0)}; unresolved: split {v.get('split', 0)}, single scan {v.get('single', 0)}, missing {v.get('missing', 0)}", verdicts=v)
     check("pickthall", "review queue: verses that need a person to check them against the page image", None,
           f"{build['review_queue']} verses ({100 * build['review_queue'] / n:.1f}%): {build['review_reasons']}", reasons=build["review_reasons"])
     check("pickthall", "caveat: the four scans may share some OCR errors", None,

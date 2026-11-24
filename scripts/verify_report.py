@@ -66,7 +66,7 @@ def main() -> int:
                         out.append(f"  - In the other layer but not in the SBLGNT: {', '.join(c['only_in_other'])}")
         out.append("")
     out += ["## Open items", "",
-            "- Check the 132 queued Pickthall verses (and, for assurance, a sample of the agreed ones) against the page images: `data/processed/pickthall/pickthall-1930-review-queue.json` (local).",
+            "- Check the 61 queued Pickthall verses (and, for assurance, a sample of the agreed ones) against the page images: `data/processed/pickthall/pickthall-1930-review-queue.json` (local).",
             "- Proofread the Henning OCR against the page images, then read its own verse numbering and map it to the standard numbering.",
             "- Confirm by an expert the links for Greek verses that exist in only one layer (critical-text omissions and divisions that differ).",
             "- The four Pickthall scans may share OCR slips; a check of a random sample against the page images would measure that.", ""]

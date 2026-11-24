@@ -219,6 +219,44 @@ def main() -> int:
     same = sum(1 for x in rows if x["gutenberg_identical"])
     report.update({"verses": len(rows), "verdicts": dict(verdicts), "identical_to_gutenberg_pickthall": same,
                    "differs_from_gutenberg": sum(1 for x in rows if x["verdict"] in ("agreed", "pair") and not x["gutenberg_identical"])})
+    # --- second line of evidence: the alignment check (pickthall_reconcile.py) confirms a verse when two or more scans match the Gutenberg wording word for word
+    chk_path = OUT / "pickthall-1930-check.json"
+    chk = {(c["sura"], c["verse"]): c for c in json.loads(chk_path.read_text())} if chk_path.exists() else {}
+    resolved_by = Counter()
+    for x in rows:
+        ref = (x["sura"], x["verse"])
+        c = chk.get(ref)
+        gk, tk_ = pr.key(guten[ref]), pr.key(x["text"])
+        if x["verdict"] in ("split", "single", "missing") and c and c["verdict"] == "confirmed":
+            x["text"], x["verdict"] = guten[ref], "confirmed-by-alignment"      # two or more scans match the Gutenberg wording exactly
+            resolved_by["confirmed by alignment with two or more scans"] += 1
+        elif gk and tk_.startswith(gk) and len(tk_) > len(gk) * 1.3 + 12 and c and c["verdict"] in ("confirmed", "single-scan"):
+            x["text"], x["verdict"] = guten[ref], "confirmed-by-alignment"      # the scan reading begins with the verse and then runs into the next sura's introduction
+            resolved_by["leaked introduction trimmed (verse confirmed by alignment)"] += 1
+        elif c and c["verdict"] == "confirmed" and gk and (len(tk_) > len(gk) * 1.35 + 25 or (len(gk) > 20 and len(tk_) < len(gk) * 0.6)):
+            x["text"], x["verdict"] = guten[ref], "confirmed-by-alignment"      # the printed-number boundary was misplaced here; two or more scans match the verse's own words
+            resolved_by["misplaced boundary: verse confirmed by alignment instead"] += 1
+        elif x["verdict"] == "single" and gk and tk_ == gk:
+            x["verdict"] = "pair-with-gutenberg"                                  # one scan and Gutenberg agree word for word
+            resolved_by["one scan agrees word for word with Gutenberg"] += 1
+    trimmed = 0
+    for x in rows:   # a reading that begins exactly like the verse and then runs on into leaked page text: cut it where the verse's own letters end
+        gk = pr.key(guten[(x["sura"], x["verse"])])
+        if len(gk) >= 8 and x["text"] and pr.key(x["text"]).startswith(gk) and len(pr.key(x["text"])) > len(gk) * 1.3 + 12:
+            acc, out = "", []
+            for w in x["text"].split():
+                out.append(w)
+                acc += pr.key(w)
+                if len(acc) >= len(gk):
+                    break
+            x["text"], x["trimmed_leak"] = " ".join(out), True
+            trimmed += 1
+    resolved_by["leaked page text trimmed where the verse ends"] += trimmed
+    for k in ("confirmed-by-alignment", "pair-with-gutenberg"):
+        verdicts[k] = sum(1 for x in rows if x["verdict"] == k)
+    verdicts = Counter(x["verdict"] for x in rows)
+    report["resolved_by_second_evidence"] = dict(resolved_by)
+    report["verdicts"] = {k: v for k, v in verdicts.items() if v}
     # --- numbering map: the number printed in the 1930 book for each standard verse (majority over the scans)
     printed: dict[str, Counter] = {}
     for sc in report["scans"].values():
@@ -240,6 +278,8 @@ def main() -> int:
         why = None
         if x["verdict"] in ("split", "single", "missing"):
             why = x["verdict"]
+        elif x["verdict"] in ("confirmed-by-alignment", "pair-with-gutenberg"):
+            why = None
         elif tlen > glen * 1.35 + 25:
             why = "text much longer than Gutenberg (page furniture or a footnote may have leaked in)"
         elif glen > 20 and tlen < glen * 0.6:
