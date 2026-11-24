@@ -276,3 +276,17 @@ phase = 1
 status = "verify"
 notes = "Verification only (small text files, about 1 MB each). Independent OCR readings of the same 1930 edition let verses be voted on: where two or more readings agree, the verse is trusted; where they all differ, it is queued for a check against the page image. Fetched 2026-11-24 as part of the request to make every layer trustworthy."
 
+
+[[source]]
+id = "german-quran-henning-typed"
+name = "Henning, Der Koran: typed text of a Reclam edition, LOCAL COMPARISON ONLY (never published)"
+language = "German"
+kind = "manual"
+url = "https://projekt-gutenberg.org/authors/max-henning/books/der-koran/"
+format = "HTML, one page per sura (114), verse numbers with the standard number in brackets"
+license = "Site Impressum: texts are classified 'gemeinfrei' to the best of the site's knowledge, but may be used only for 'privaten Gebrauch'; reproduction and redistribution are 'nicht gestattet' (read 2026-11-24). Not redistributable here."
+license_url = "https://projekt-gutenberg.org/impressum/"
+attribution = "Max Henning, Der Koran (Reclam; the site names the 1970 printing), typed on projekt-gutenberg.org"
+phase = 1
+status = "manual"
+notes = "Downloaded 2026-11-24 with the owner's approval, for local comparison only: it stays in the git-ignored data/raw and is never copied into the repo, the Markdown layers or the app. Used to measure the OCR of the 1901 scan and to read off the standard verse numbers. The site's source is the 1970 printing, which may be a revised text: wording agrees with our 1901 scan (mean similarity 0.966 over 5,192 verses, first 400 letters each, spelling differences included), but its verse division differs from the 1901 scan in at least sura 101."
