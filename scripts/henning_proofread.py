@@ -25,8 +25,11 @@ SRC = MD / "german-quran-henning-fraktur-ocr-normalized-latf.md"
 OUT = MD / "german-quran-henning-fraktur-ocr-normalized-latf-pass2.md"
 SWAP = {"b": "h", "3": "s"}   # only the slips whose repairs were checked to be reliable: b read for h, 3 read for s
 # real words or truncated fragments that the rules would wrongly change (found by reading the repair log)
-DENY = {"beit", "bangen", "barre", "viebs", "höben", "wober", "shmu", "mobam", "bält", "balt", "sebe", "bebet", "bellen", "binnen", "hinnen"}
+DENY = {"ausgeben", "eingeben", "aufgeben", "abgeben", "angeben", "übergeben", "vergeben", "hergeben", "ausgebt", "begebt", "vergebt", "gebt", "ebnen", "reibt", "beit", "bangen", "barre", "viebs", "höben", "wober", "shmu", "mobam", "bält", "balt", "sebe", "bebet", "bellen", "binnen", "hinnen", "nuten", "negen", "schen", "tren"}
 WORD = re.compile(r"[A-Za-zÄÖÜäöüß3>]+")
+
+
+SUBS = [("an", "au"), ("en", "eu"), ("fi", "st"), ("scl", "schl"), ("scw", "schw"), ("scr", "schr"), ("scm", "schm"), ("scn", "schn"), ("bm", "hm"), ("äb", "äh")]
 
 
 def edits(w: str):
@@ -41,6 +44,9 @@ def edits(w: str):
             out.add(w[:i] + "tz" + w[i + 1:])
             out.add(w[:i] + "ss" + w[i + 1:])
             out.add(w[:i] + "ch" + w[i + 1:])        # "spreßen" for "sprechen"
+    for a, b in SUBS:
+        for m in re.finditer(a, w):
+            out.add(w[:m.start()] + b + w[m.end():])
     return out
 
 
@@ -50,6 +56,29 @@ def candidates(w: str):
         frontier = {e for x in frontier for e in edits(x)} - seen - {w}
         seen |= frontier
     return seen
+
+
+def apply_manual(text: str) -> str:
+    """Corrections made by reading a page image (data/processed/henning/manual-fixes.json, local): {"pages": {"334": [[old, new], ...]}}.
+    An old string that is not found is reported, never ignored."""
+    path = ROOT / "data" / "processed" / "henning" / "manual-fixes.json"
+    if not path.exists():
+        return text
+    fixes = json.loads(path.read_text(encoding="utf-8"))
+    parts = re.split(r"(?m)^(## Page \d+\n)", text)
+    out, missing = [parts[0]], []
+    for i in range(1, len(parts), 2):
+        n = re.match(r"## Page (\d+)", parts[i]).group(1)
+        body = parts[i + 1]
+        for old, new in fixes.get("pages", {}).get(n, []):
+            if old in body:
+                body = body.replace(old, new, 1)
+            else:
+                missing.append((n, old))
+        out += [parts[i], body]
+    if missing:
+        print("manual fixes whose old text was not found:", missing)
+    return "".join(out)
 
 
 def main() -> int:
@@ -62,6 +91,9 @@ def main() -> int:
     def repl(m: re.Match) -> str:
         w = m.group(0)
         lw = w.lower()
+        if "cch" in lw:   # never valid German ("encch" for "euch")
+            lw = lw.replace("cch", "ch")
+            w = lw.capitalize() if w[:1].isupper() else lw
         if ">" in lw:   # "ck" read as ">" or ">k" ("zurü>kehren" = zurückkehren, "frohlo>kend" = frohlockend); ">" never occurs in the book's German
             opts = [lw.replace(">k", "ck"), lw.replace(">", "ck")]
             ok = [o for o in opts if ">" not in o and known(o)]
@@ -70,7 +102,16 @@ def main() -> int:
             w = lw.capitalize() if w[:1].isupper() else lw
         if len(lw) < (2 if "3" in lw else 4) or lex.get(lw, 0) > 0 or lw in DENY:
             return w
-        if "scch" in lw and known(lw.replace("scch", "sch")):   # doubled c ("scchweifen")
+        for bad, good_ in (("fh", "sch"), ("kf", "kk")):   # doubled c; long s + h read as "fh"; "Mekfa"
+            if bad in lw and known(lw.replace(bad, good_)) and not known(lw):
+                lw = lw.replace(bad, good_)
+                log[(w.lower(), lw)] += 1
+                return lw.capitalize() if w[:1].isupper() else lw
+        if lw[0] in "nr" and w[:1].isupper() and not known(lw) and known(("r" if lw[0] == "n" else "n") + lw[1:]) and own[lw] < 3:
+            lw = ("r" if lw[0] == "n" else "n") + lw[1:]   # first capital N read for R or the reverse ("Nede" = Rede)
+            log[(w.lower(), lw)] += 1
+            return lw.capitalize()
+        if "scch" in lw:   # doubled c ("scchweifen"): never valid German
             lw = lw.replace("scch", "sch")
             log[(w.lower(), lw)] += 1
             return lw.capitalize() if w[:1].isupper() else lw
@@ -86,6 +127,7 @@ def main() -> int:
         return fixed.capitalize() if w[:1].isupper() else fixed
 
     new = WORD.sub(repl, text)
+    new = apply_manual(new)
     new = new.replace('status: "machine OCR, not proofread"', 'status: "machine OCR plus automatic repair pass 2; not proofread by a person"', 1)
     OUT.write_text(new, encoding="utf-8")
     (MD / "CORRECTIONS-pass2.json").write_text(json.dumps({"count": sum(log.values()), "distinct": len(log),
