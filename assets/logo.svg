@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-labelledby="t">
+  <title id="t">Abrahamic Texts Lab logo: three arcs linking points on a line</title>
+  <rect x="2" y="2" width="196" height="196" rx="44" fill="#111a22" stroke="#2b3a40" stroke-width="3"/>
+  <g transform="translate(0 -16)">
+  <line x1="32" y1="150" x2="168" y2="150" stroke="#2f414b" stroke-width="4" stroke-linecap="round"/>
+  <path d="M40 150 A60 60 0 0 1 160 150" fill="none" stroke="#e8b45a" stroke-width="9" stroke-linecap="round"/>
+  <path d="M40 150 A30 30 0 0 1 100 150" fill="none" stroke="#7fc8a9" stroke-width="9" stroke-linecap="round"/>
+  <path d="M100 150 A30 30 0 0 1 160 150" fill="none" stroke="#8fa8e8" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="40" cy="150" r="8" fill="#111a22" stroke="#e8edf2" stroke-width="4"/>
+  <circle cx="100" cy="150" r="8" fill="#111a22" stroke="#e8edf2" stroke-width="4"/>
+  <circle cx="160" cy="150" r="8" fill="#111a22" stroke="#e8edf2" stroke-width="4"/>
+  <circle cx="100" cy="90" r="9" fill="#e8b45a"/>
+</g>
+</svg>
