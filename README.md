@@ -112,6 +112,7 @@ Known gaps are stated openly. For Phase 1: the proposed English (Pickthall 1930)
 assets/                  logo and banner
 data/sources.toml        machine-readable source manifest
 data/raw/                fetched third-party texts (git-ignored)
+data/processed/markdown/ Markdown copies with provenance and quality checks (git-ignored)
 docs/                    scope, research questions, architecture, ethics
 scripts/fetch_sources.py dry-run by default; --execute downloads
 tests/                   manifest checks
@@ -126,7 +127,11 @@ Python 3.11+, standard library only for now.
 python3 scripts/fetch_sources.py                            # dry run: prints the plan, downloads nothing
 python3 scripts/fetch_sources.py --phase 1                  # dry run for Phase 1 sources only
 python3 scripts/fetch_sources.py --execute hebrew-morphhb   # fetch one source
-python3 -m unittest discover -s tests                       # check the manifest
+python3 -m unittest discover -s tests                       # check the manifest and converters
+
+# optional: Markdown copies of everything downloaded (local, git-ignored)
+python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python scripts/to_markdown.py
 ```
 
 Only sources marked `ready` are fetched.

@@ -1,0 +1,3 @@
+# Optional tooling for scripts/to_markdown.py (PDF text extraction). The fetch script and tests need nothing.
+# Install in a local venv:  python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt
+pdfminer.six>=20260107   # MIT license

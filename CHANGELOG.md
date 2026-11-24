@@ -4,6 +4,17 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Added
+- `scripts/to_markdown.py`: writes a Markdown copy of every downloaded source next to the original (local, git-ignored), with provenance front matter, per-page headings for PDFs, an OCR-quality flag, and lossless checks. Also writes a Pickthall-only extraction from the Gutenberg text with verse-count checks and a log of repaired ids. Tests in `tests/test_to_markdown.py`.
+- `--allow-unverified` for `fetch_sources.py` (only for explicitly named sources) and multi-file sources (`files` list) in the manifest.
+- `requirements.txt` (pdfminer.six, optional, for PDF text).
+- First downloads (owner-approved 2026-11-24): Pickthall 1930 scan (PDF and OCR text), Project Gutenberg #16955 text, and the Henning scan (PDF and OCR text), all from the Internet Archive.
+
+### Found
+- Henning's archive OCR and PDF text layer are unusable (Fraktur misread). A Fraktur OCR is needed.
+- The Pickthall PDF is image-only; its OCR text is good.
+- The Gutenberg #16955 Pickthall lines differ from the 1930 text in places, so they are used only as a scaffold and cross-check.
+
 ### Changed
 - Phase 1 Qur'an layers confirmed by the owner (2026-11-24): Pickthall 1930 (English) and Henning 1901 (German), both public-domain translations that need OCR from scans. Replaced the blocked placeholder `english-quran` with `english-quran-pickthall` and rewrote the Henning entry, with the sources and layers to avoid recorded in `SOURCES.md` and the ethics doc.
 

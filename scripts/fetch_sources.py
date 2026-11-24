@@ -37,14 +37,22 @@ def describe(src: dict) -> str:
     return f"{src['id']:<22} P{src['phase']} {src['status']:<8} {src['kind']:<6} {src['license']}"
 
 
+def file_list(src: dict) -> list[dict]:
+    """Files of a kind="file" source: the `files` list, or the single url/filename pair."""
+    return src.get("files") or [{"url": src["url"], "filename": src["filename"]}]
+
+
 def fetch_file(src: dict, dest: Path) -> dict:
     dest.mkdir(parents=True, exist_ok=True)
-    target = dest / src["filename"]
-    req = urllib.request.Request(src["url"], headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=60) as resp:  # noqa: S310 (https URLs from our own manifest)
-        data = resp.read()
-    target.write_bytes(data)
-    return {"file": src["filename"], "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+    records = []
+    for item in file_list(src):
+        req = urllib.request.Request(item["url"], headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=120) as resp:  # noqa: S310 (https URLs from our own manifest)
+            data = resp.read()
+        (dest / item["filename"]).write_bytes(data)
+        records.append({"url": item["url"], "file": item["filename"], "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
+        print(f"    {item['filename']}: {len(data):,} bytes")
+    return {"files": records}
 
 
 def run(cmd: list[str], cwd: Path | None = None) -> str:
@@ -70,7 +78,7 @@ def fetch(src: dict) -> None:
     result = fetch_file(src, dest) if src["kind"] == "file" else fetch_git(src, dest)
     record = {
         "id": src["id"],
-        "url": src["url"],
+        "status_at_fetch": src["status"],
         "retrieved_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "license": src["license"],
         "license_url": src["license_url"],
@@ -86,6 +94,7 @@ def main() -> int:
     ap.add_argument("ids", nargs="*", help="source ids to act on (default: all)")
     ap.add_argument("--phase", type=int, choices=(1, 2), help="only act on sources planned for this project phase")
     ap.add_argument("--execute", action="store_true", help="actually download (default is a dry-run plan)")
+    ap.add_argument("--allow-unverified", action="store_true", help='also fetch "verify" sources, but only ones named explicitly by id (owner-approved downloads)')
     args = ap.parse_args()
 
     sources = load_sources()
@@ -99,14 +108,18 @@ def main() -> int:
         if (not args.ids or s["id"] in args.ids) and (args.phase is None or s["phase"] == args.phase)
     ]
 
+    allowed = {"ready"} | ({"verify"} if args.allow_unverified and args.ids else set())
     print(("EXECUTE" if args.execute else "DRY RUN (nothing will be downloaded)") + "\n")
     for src in chosen:
         print(describe(src))
-        if src["status"] != "ready":
-            print(f"  not fetched: status is '{src['status']}'. {src['notes']}")
+        if src["status"] not in allowed or src["kind"] == "manual":
+            print(f"  not fetched: status is '{src['status']}', kind is '{src['kind']}'. {src['notes'][:200]}")
             continue
         if args.execute:
             fetch(src)
+        elif src["kind"] == "file":
+            for item in file_list(src):
+                print(f"  would fetch {item['url']} -> data/raw/{src['id']}/{item['filename']}")
         else:
             print(f"  would fetch {src['url']} -> data/raw/{src['id']}/")
     return 0

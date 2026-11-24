@@ -44,6 +44,7 @@ Layers: sources (raw, untouched) -> parsers -> a unified corpus with stable iden
 - Python 3.11+. The fetch script and tests use the standard library only. Add dependencies only with a reason, and record significant choices as ADRs in `docs/adr/` (create the folder when the first ADR is written).
 - Tests: `python3 -m unittest discover -s tests`
 - Dry-run fetch plan: `python3 scripts/fetch_sources.py` (add `--phase 1` or `--phase 2` to filter)
+- Markdown copies of downloaded sources: `.venv/bin/python scripts/to_markdown.py` (needs `requirements.txt`). Every download gets a Markdown version next to the original; never trust an OCR output without its quality flag.
 - Fetch one source (owner approval required first): `python3 scripts/fetch_sources.py --execute <id>`
 
 If a command does not work, check this file, `README.md` and `ROADMAP.md` rather than guessing, and tell the user what is missing.

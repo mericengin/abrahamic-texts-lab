@@ -34,7 +34,7 @@ class ManifestTest(unittest.TestCase):
                     self.assertTrue(s[key], f"{s['id']} is ready but has empty {key}")
                 self.assertTrue(s["url"].startswith("https://"), s["id"])
                 if s["kind"] == "file":
-                    self.assertTrue(s.get("filename"), s["id"])
+                    self.assertTrue(s.get("filename") or s.get("files"), s["id"])
 
     def test_blocked_sources_have_no_url(self):
         for s in self.sources:

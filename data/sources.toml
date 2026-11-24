@@ -194,9 +194,13 @@ notes = "No open Coptic edition found. The only free English text found has no n
 
 [[source]]
 id = "english-quran-pickthall"
-name = "The Meaning of the Glorious Koran, Marmaduke Pickthall (1930)"
+name = "The Meaning of the Glorious Koran, Marmaduke Pickthall (1930), scan"
 language = "English"
-kind = "manual"
+kind = "file"
+files = [
+  { url = "https://archive.org/download/in.ernet.dli.2015.216140/2015.216140.The-Meaning.pdf", filename = "2015.216140.The-Meaning.pdf" },
+  { url = "https://archive.org/download/in.ernet.dli.2015.216140/2015.216140.The-Meaning_djvu.txt", filename = "2015.216140.The-Meaning_djvu.txt" },
+]
 url = "https://commons.wikimedia.org/wiki/File:The_Meaning_of_the_Glorious_Koran_(1930).pdf"
 format = "scanned book PDF (OCR and proofreading needed); archaic English (thee, thou, ye)"
 license = "Public Domain per Wikimedia Commons and Wikisource (published before 1931; translator died 1936); not independently verified"
@@ -204,13 +208,17 @@ license_url = "https://commons.wikimedia.org/wiki/File:The_Meaning_of_the_Glorio
 attribution = "Marmaduke Pickthall, The Meaning of the Glorious Koran, 1930"
 phase = 1
 status = "verify"
-notes = "English Qur'an layer, CONFIRMED by the owner 2026-11-24 (rights still unverified, so status stays verify). Planned files from archive.org item in.ernet.dli.2015.216140 (Digital Library of India scan, 1930): 2015.216140.The-Meaning.pdf (44,115,305 bytes) and 2015.216140.The-Meaning_djvu.txt (1,263,880 bytes, OCR of unknown quality); the 722 MB EPUB is not needed. Use the 1930 text only: later revised editions (for example Everyman 1993, Amana 1996, Fahmy 2022) may carry new copyright. No redistributable machine-readable copy exists: Tanzil's Pickthall file is non-commercial and may not be redistributed (use at most as a private cross-check), and the English Wikisource transcription is unproofread and incomplete (suras 8-38 missing) and carries CC BY-SA. Plan: OCR the public-domain scan, proofread, and map verse numbering to the corpus scheme. Publisher and place are inconsistent across pages; check the scan's title page. Yusuf Ali is not used: its US copyright status is disputed. READY-MADE ALTERNATIVE TO OCR (found 2026-11-24, not yet downloaded or verified): Project Gutenberg #16955 \"Three Translations of The Koran side by side\", mirrored at archive.org/download/threetranslation16955gut/16955.txt (2,833,433 bytes). Verse-by-verse text with SSS.VVV numbering and Pickthall lines prefixed \"P:\", ASCII, described as re-proofed against paper copies of unknown edition. It also contains Yusuf Ali and Shakir lines, which must not be used. Verify against the 1930 scan (spot checks, verse counts, diff) before relying on it. Other IA copies of the 1930 edition exist (for example dli.csl.3756, dli.ministry.16944, in.ernet.dli.2015.233444) for cross-checking OCR."
+notes = "English Qur'an layer, CONFIRMED by the owner 2026-11-24 (rights still unverified, so status stays verify). Planned files from archive.org item in.ernet.dli.2015.216140 (Digital Library of India scan, 1930): 2015.216140.The-Meaning.pdf (44,115,305 bytes) and 2015.216140.The-Meaning_djvu.txt (1,263,880 bytes, OCR of unknown quality); the 722 MB EPUB is not needed. Use the 1930 text only: later revised editions (for example Everyman 1993, Amana 1996, Fahmy 2022) may carry new copyright. No redistributable machine-readable copy exists: Tanzil's Pickthall file is non-commercial and may not be redistributed (use at most as a private cross-check), and the English Wikisource transcription is unproofread and incomplete (suras 8-38 missing) and carries CC BY-SA. Plan: OCR the public-domain scan, proofread, and map verse numbering to the corpus scheme. Publisher and place are inconsistent across pages; check the scan's title page. Yusuf Ali is not used: its US copyright status is disputed. READY-MADE ALTERNATIVE TO OCR (found 2026-11-24, not yet downloaded or verified): Project Gutenberg #16955 \"Three Translations of The Koran side by side\", mirrored at archive.org/download/threetranslation16955gut/16955.txt (2,833,433 bytes). Verse-by-verse text with SSS.VVV numbering and Pickthall lines prefixed \"P:\", ASCII, described as re-proofed against paper copies of unknown edition. It also contains Yusuf Ali and Shakir lines, which must not be used. Verify against the 1930 scan (spot checks, verse counts, diff) before relying on it. Other IA copies of the 1930 edition exist (for example dli.csl.3756, dli.ministry.16944, in.ernet.dli.2015.233444) for cross-checking OCR. DOWNLOADED 2026-11-24 (owner-approved): the PDF is image-only (710 pages, no text layer), but the archive's OCR text is good (289.7 common words per 1000 tokens). This 1930 scan is the authoritative English layer. It numbers verses by its own count (the basmala is unnumbered), so a mapping to the standard count is needed."
 
 [[source]]
 id = "german-quran-henning"
 name = "Der Koran, Max Henning (Reclam, Leipzig, 1901)"
 language = "German"
-kind = "manual"
+kind = "file"
+files = [
+  { url = "https://archive.org/download/derkoran00henn/derkoran00henn.pdf", filename = "derkoran00henn.pdf" },
+  { url = "https://archive.org/download/derkoran00henn/derkoran00henn_djvu.txt", filename = "derkoran00henn_djvu.txt" },
+]
 url = "https://archive.org/details/derkoran00henn"
 format = "scanned book with ABBYY OCR full text (quality unmeasured)"
 license = "Translation public domain in Germany by the author-death rule (Henning died 1927; if a pseudonym for August Müller, died 1892); no rights metadata on the scan; not independently verified"
@@ -218,4 +226,22 @@ license_url = "https://archive.org/details/derkoran00henn"
 attribution = "Max Henning, Der Koran, Leipzig: Reclam, 1901 (Toronto/Robarts scan, Internet Archive)"
 phase = 1
 status = "verify"
-notes = "German Qur'an layer, CONFIRMED by the owner 2026-11-24 (rights and edition still unverified, so status stays verify). Planned files from archive.org item derkoran00henn: derkoran00henn.pdf (27,574,983 bytes) and derkoran00henn_djvu.txt (1,255,898 bytes, ABBYY OCR of unmeasured quality). Do NOT use the Projekt Gutenberg-DE copy: its terms allow private use only and forbid copying, passing on and publishing, and it carries a 1970 Reclam colophon with editorial glosses of unknown authorship. The archive.org item has no date on its page (1901 comes from Wikipedia's link), so confirm the edition on the title page of the scan. Henning's identity is unproven as a pseudonym. Later Reclam editions (Schimmel notes, 1960 onward) may carry separate rights. Verse numbering is irregular (translation count and standard count differ), so a mapping to the corpus scheme is required. Ullmann 1840, Goldschmidt 1916 and Rueckert 1888 were not verifiable (pages unreachable); Rueckert's 1888 edition may be abridged. Internet Archive findings: the Rueckert item is titled 'im Auszuge' (abridged), so it is not usable as a complete layer. The item koran_20250207 is credited to 'Max Hennıng' but its description says it is a translation published by the Turkish Presidency of Religious Affairs, so it is NOT Henning and must not be used. Other IA scans, not yet checked: Goldschmidt 1916 (derkoranelkorand00golduoft), Ullmann 1840 (derkoran00ullmgoog) and 1865 (derkoranausdemar00ullm), Boysen 1828 (derkoranoderdasg00boys). No clean ready-made German text exists; the IA item for Henning already carries ABBYY OCR (derkoran00henn_djvu.txt), so we do not need to scan it ourselves, only clean and verify it."
+notes = "German Qur'an layer, CONFIRMED by the owner 2026-11-24 (rights and edition still unverified, so status stays verify). Planned files from archive.org item derkoran00henn: derkoran00henn.pdf (27,574,983 bytes) and derkoran00henn_djvu.txt (1,255,898 bytes, ABBYY OCR of unmeasured quality). Do NOT use the Projekt Gutenberg-DE copy: its terms allow private use only and forbid copying, passing on and publishing, and it carries a 1970 Reclam colophon with editorial glosses of unknown authorship. The archive.org item has no date on its page (1901 comes from Wikipedia's link), so confirm the edition on the title page of the scan. Henning's identity is unproven as a pseudonym. Later Reclam editions (Schimmel notes, 1960 onward) may carry separate rights. Verse numbering is irregular (translation count and standard count differ), so a mapping to the corpus scheme is required. Ullmann 1840, Goldschmidt 1916 and Rueckert 1888 were not verifiable (pages unreachable); Rueckert's 1888 edition may be abridged. Internet Archive findings: the Rueckert item is titled 'im Auszuge' (abridged), so it is not usable as a complete layer. The item koran_20250207 is credited to 'Max Hennıng' but its description says it is a translation published by the Turkish Presidency of Religious Affairs, so it is NOT Henning and must not be used. Other IA scans, not yet checked: Goldschmidt 1916 (derkoranelkorand00golduoft), Ullmann 1840 (derkoran00ullmgoog) and 1865 (derkoranausdemar00ullm), Boysen 1828 (derkoranoderdasg00boys). No clean ready-made German text exists; the IA item for Henning already carries ABBYY OCR (derkoran00henn_djvu.txt), so we do not need to scan it ourselves, only clean and verify it. DOWNLOADED 2026-11-24 (owner-approved), and the archive OCR turned out to be UNUSABLE: the book is printed in Fraktur and was read as ordinary type (45.9 common German words per 1000 tokens, against about 250 to 350 in normal German). The PDF's embedded text layer is the same garbage. A new OCR with a Fraktur-capable engine (for example Tesseract with a Fraktur model) on the PDF page images is required. The title page prints 'Printed in Germany' in English, so the scan may be a later printing than 1901; confirm the edition and date."
+
+[[source]]
+id = "english-quran-pickthall-gutenberg"
+name = "Three Translations of the Koran side by side (Project Gutenberg #16955; use the Pickthall lines only)"
+language = "English"
+kind = "file"
+url = "https://archive.org/details/threetranslation16955gut"
+files = [
+  { url = "https://archive.org/download/threetranslation16955gut/16955.txt", filename = "16955.txt" },
+]
+format = "plain text, verse by verse (SSS.VVV), lines prefixed Y: (Yusuf Ali), P: (Pickthall), S: (Shakir)"
+license = "Project Gutenberg ebook, header says use with almost no restrictions. Pickthall's translation is public domain per Commons and Wikisource. The Yusuf Ali and Shakir lines are NOT cleared and must not be used or published."
+license_url = "https://archive.org/details/threetranslation16955gut"
+attribution = "Project Gutenberg ebook #16955, released 2005-10-27; translations by M. Pickthall, A. Yusuf Ali and M. H. Shakir; re-proofed by Irfan Ali"
+phase = 1
+status = "verify"
+notes = "Ready-made, verse-aligned Pickthall text, so no OCR is needed for the English layer. Edition of the underlying Pickthall text is unknown (header says re-proofed against paper copies). Verify against the 1930 scan (verse counts, spot checks, diff) before relying on it. Fetched from the Internet Archive mirror because gutenberg.org was down for maintenance on 2026-11-24. The Pickthall-only extraction is a separate derived file; the full conversion keeps all three translations for fidelity and must stay local. DOWNLOADED 2026-11-24 (owner-approved). After repairing four corrupted verse ids in the source (17:33, 39:46, 45:32, 56:26) the Pickthall extraction has 114 suras and 6,236 verses, matching the standard count. HOWEVER its Pickthall lines are not a pure copy of the 1930 text: for example 1:4 reads 'Master of the Day of Judgment' (Yusuf Ali's wording) where the 1930 scan reads 'Owner of the Day of Judgment'. In a seeded 300-verse sample, 77 percent match the scan word for word and 96 percent match at 0.9 similarity or better (the rest is OCR noise or real wording differences). Use it only as a numbering scaffold and cross-check, not as the text."
+
