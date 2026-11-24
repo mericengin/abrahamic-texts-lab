@@ -215,7 +215,7 @@ def main() -> int:
                 verdict, text = "voted", voted      # settled by a word-by-word majority; still unverified against the page image
         verdicts[verdict] += 1
         rows.append({"sura": r[0], "verse": r[1], "verdict": verdict, "scans_with_verse": len(keys), "identical": c, "text": text,
-                     "gutenberg_identical": pr.key(guten[r]) == top, "readings": {n: t for n, t in reads.items()} if verdict in ("split", "single", "pair") else {}})
+                     "gutenberg_identical": pr.key(guten[r]) == top, "readings": {n: t for n, t in reads.items()} if (verdict in ("split", "single", "pair", "voted") or len(pr.key(text)) > len(pr.key(guten[r])) * 1.35 + 25) else {}})
     same = sum(1 for x in rows if x["gutenberg_identical"])
     report.update({"verses": len(rows), "verdicts": dict(verdicts), "identical_to_gutenberg_pickthall": same,
                    "differs_from_gutenberg": sum(1 for x in rows if x["verdict"] in ("agreed", "pair") and not x["gutenberg_identical"])})
@@ -239,6 +239,30 @@ def main() -> int:
         elif x["verdict"] == "single" and gk and tk_ == gk:
             x["verdict"] = "pair-with-gutenberg"                                  # one scan and Gutenberg agree word for word
             resolved_by["one scan agrees word for word with Gutenberg"] += 1
+    import difflib
+    tkw = lambda w: re.sub(r"[^a-z]", "", w.lower())
+
+    def words_confirmed(gtext: str, reading: str) -> bool:
+        """The verse's words appear in order in the reading; anything else in the reading is inserted clutter (a footnote or a running header), with no replaced words."""
+        g = [tkw(w) for w in gtext.split() if tkw(w)]
+        r = [tkw(w) for w in reading.split() if tkw(w)]
+        if len(g) < 3:
+            return False
+        sm = difflib.SequenceMatcher(None, g, r, autojunk=False)
+        matched = sum(b.size for b in sm.get_matching_blocks())
+        replaced = sum(max(i2 - i1, j2 - j1) for t, i1, i2, j1, j2 in sm.get_opcodes() if t == "replace")
+        deleted = sum(i2 - i1 for t, i1, i2, j1, j2 in sm.get_opcodes() if t == "delete")
+        return matched / len(g) >= 0.96 and replaced <= max(1, len(g) // 25) and deleted <= max(1, len(g) // 25)
+
+    for x in rows:
+        ref = (x["sura"], x["verse"])
+        glen, tlen = len(pr.key(guten[ref])), len(pr.key(x["text"]))
+        queued = x["verdict"] in ("split", "single", "missing") or tlen > glen * 1.35 + 25 or (glen > 20 and tlen < glen * 0.6)
+        if queued and x["verdict"] not in ("confirmed-by-alignment", "pair-with-gutenberg"):
+            good = [n for n, t in x["readings"].items() if t and words_confirmed(guten[ref], t)] if x["readings"] else []
+            if len(good) >= 2:
+                x["text"], x["verdict"] = guten[ref], "words-confirmed"
+                resolved_by["verse words found in order in two or more scans (surrounding footnote or header text ignored)"] += 1
     trimmed = 0
     for x in rows:   # a reading that begins exactly like the verse and then runs on into leaked page text: cut it where the verse's own letters end
         gk = pr.key(guten[(x["sura"], x["verse"])])
@@ -278,7 +302,7 @@ def main() -> int:
         why = None
         if x["verdict"] in ("split", "single", "missing"):
             why = x["verdict"]
-        elif x["verdict"] in ("confirmed-by-alignment", "pair-with-gutenberg"):
+        elif x["verdict"] in ("confirmed-by-alignment", "pair-with-gutenberg", "words-confirmed"):
             why = None
         elif tlen > glen * 1.35 + 25:
             why = "text much longer than Gutenberg (page furniture or a footnote may have leaked in)"
