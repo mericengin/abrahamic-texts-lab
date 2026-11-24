@@ -82,8 +82,10 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [ ] Owner approves the first download batch (filenames and sizes listed first)
 - [ ] Fetch the Phase 1 `ready` sources; check provenance records
 - [ ] Resolve the Phase 1 `verify` items: SBLGNT license conflict, Luther 1912 URL, Septuagint edition (confirm Swete or drop)
-- [ ] Owner confirms the English Qur'an layer: Pickthall 1930 (proposed); OCR the public-domain scan, proofread, and map verse numbering
-- [ ] Owner confirms the German Qur'an layer: Henning 1901 (proposed); confirm the edition on the scan's title page, measure OCR quality, proofread, and map verse numbering. Not the Projekt Gutenberg-DE copy (private use only).
+- [x] Owner confirms the English Qur'an layer: Pickthall 1930 (confirmed 2026-11-24)
+- [ ] Obtain the Pickthall scan, OCR or correct it, proofread, and map verse numbering
+- [x] Owner confirms the German Qur'an layer: Henning 1901 (confirmed 2026-11-24)
+- [ ] Obtain the Henning scan, confirm the edition on its title page, measure OCR quality, proofread, and map verse numbering. Not the Projekt Gutenberg-DE copy (private use only).
 - [ ] Decide the stable identifier scheme (ADR 0001)
 - [ ] Parsers: OSIS (Hebrew), MorphGNT, USFX (WEB, Luther), Tanzil, Septuagint CTS/EpiDoc if kept
 - [ ] Unified schema and database with per-row provenance and license
@@ -227,8 +229,8 @@ Scope: everything in Phase 1 plus the harder texts. No Phase 1 goal is dropped; 
 
 ## Open decisions
 
-1. Confirm Pickthall (1930) as the English Qur'an layer (proposed; no ready-made redistributable text, so OCR and proofreading are needed).
-2. Confirm Henning (1901) as the German Qur'an layer, and the OCR and proofreading approach.
+1. ~~English Qur'an layer~~ Decided: Pickthall (1930). OCR and proofreading still needed.
+2. ~~German Qur'an layer~~ Decided: Henning (1901). OCR approach still to design.
 3. Septuagint as an optional Greek layer in Phase 1: keep or drop.
 4. Gospel of Judas: permission, own transcription, or defer (Phase 2).
 5. German and Syriac layers for Phase 2 texts.
