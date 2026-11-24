@@ -424,6 +424,14 @@ def verify_henning() -> None:
                   f"word errors {W} of {E} ({100 * W / E:.1f}%), character errors {C} of {N} ({100 * C / N:.2f}%). Three pages, about {E} words: an estimate, not a guarantee; the repair-pass rules were tuned on pages 152, 250 and 450, so the pass-2 figure is optimistic.",
                   word_errors=W, words=E, char_errors=C, chars=N)
             best = (label, 100 * W / E)
+    tm = ROOT / "data" / "processed" / "henning" / "typed-measure.json"
+    if tm.exists():
+        m = json.loads(tm.read_text())
+        a, b = m["normalized"], m["normalized + repair pass 2"]
+        check("henning", "OCR accuracy against a typed copy of a Reclam edition, all 113 suras after the first (local reference, scripts/henning_typed_measure.py)", None,
+              f"over {b['typed_words']:,} words, words that differ in an OCR-like way (within two letters): {a['ocr_like_rate_percent']}% before the repair pass and {b['ocr_like_rate_percent']}% after it "
+              f"({b['broad_rate_percent']}% with a wider tolerance); a further {b['other_rate_percent']}% of words differ for other reasons (footnotes and headings in one text, "
+              f"compound spelling, and a revised wording in the typed 1970 edition), so the typed text is a reference, not the truth. This agrees with the 1.3% found by eye on a random sample.")
     check("henning", "trustworthiness of the German Qur'an layer", False,
           f"NOT yet trustworthy as text: the best variant measured ({best[0]}, about {best[1]:.1f}% word errors on two sampled pages) still has errors, and nothing has been proofread against the page images. "
           "It is complete (all pages, continuous) and usable for search and reading, but not accurate enough to quote." if best else "No OCR accuracy measurement available.")
