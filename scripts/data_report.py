@@ -63,6 +63,13 @@ def main() -> int:
                 p = conv["pickthall_only"]
                 out.append(f"- **Pickthall-only extraction:** {p['verses_found']:,} verses in {p['suras_found']} suras (standard count {p['reference_total_verses_standard_count']:,}); "
                            f"{len(p['repaired_corrupted_verse_ids'])} corrupted verse ids repaired and logged")
+        layers = load(PROC / "markdown" / sid / "OCR_LAYERS.json")
+        if layers:
+            for name in ("raw", "normalized"):
+                l = layers[name]
+                out.append(f"- **Markdown of the fresh OCR ({name}):** `{l['file']}`, {l['bytes']:,} bytes, {l['common_words_per_1000']} common German words per 1000, "
+                           f"{l['tokens_seen_3_or_more_times_percent']}% of tokens seen 3 or more times")
+            out.append(f"- **Normalization:** {layers['corrections']:,} logged repairs {layers['by_rule']}; near-empty pages {layers['near_empty_pages']} (blank or show-through pages)")
         ocr = load(PROC / "ocr" / sid / "OCR.json")
         if ocr:
             out.append(f"- **Fresh OCR:** {ocr['pages']} pages with {ocr['tesseract']}, model `{ocr['language_model']}`, {ocr['dpi']} dpi, psm {ocr['psm']}; near-empty pages: {len(ocr['empty_pages'])}")

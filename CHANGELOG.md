@@ -16,6 +16,8 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 ### Changed
 - SBLGNT text marked `ready` (CC BY 4.0 in the holders' own repository); Luther 1912 marked `ready` (eBible details page reads Public Domain).
 
+- Fresh Fraktur OCR of all 622 Henning pages (Tesseract 5.5.3, Fraktur model), as raw and normalized Markdown with a log of 3,315 repairs; quality 280 (raw) and 329 (normalized) common German words per 1000, against 46 for the archive's OCR.
+
 ### Found
 - Henning's archive OCR and PDF text layer are unusable (Fraktur misread). A Fraktur OCR is needed.
 - The Pickthall PDF is image-only; its OCR text is good.

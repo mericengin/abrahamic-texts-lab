@@ -75,7 +75,13 @@ def main() -> int:
             if "<" in w and re.search(r"[A-Za-zÀ-ÿ]", w):
                 # '<' never occurs in German words; Tesseract writes the Fraktur ch ligature as '<' (ſi< = sich, no< = noch)
                 new = w.replace("<h", "ch").replace("<", "ch")
-                log.append({"page": n, "from": w, "to": new, "rule": "'<' is the ch ligature"})
+                rule = "'<' is the ch ligature"
+                if True:  # the OCR may also have swapped u and n (en< = euch): take a far more frequent single-swap word
+                    alt = max((c for c in candidates(new.lower()) if "<" not in c and ">" not in c), key=lambda c: freq.get(c, 0), default=None)
+                    if alt and freq.get(alt, 0) >= max(10, 5 * freq.get(new.lower(), 0)):
+                        new = alt.capitalize() if w[:1].isupper() else alt
+                        rule = "'<' is the ch ligature, plus a u/n swap"
+                log.append({"page": n, "from": w, "to": new, "rule": rule})
                 return new
             if len(lw) < 4 or freq[lw] > 2:
                 return w
@@ -118,6 +124,9 @@ def main() -> int:
     (ROOT / "data" / "processed" / "markdown" / sid / "CORRECTIONS.json").write_text(
         json.dumps({"count": len(log), "top": Counter((c["from"], c["to"]) for c in log).most_common(40), "by_rule": dict(Counter(c["rule"] for c in log)), "all": log}, indent=1, ensure_ascii=False) + "\n",
         encoding="utf-8")
+    (ROOT / "data" / "processed" / "markdown" / sid / "OCR_LAYERS.json").write_text(
+        json.dumps({"raw": raw, "normalized": norm, "corrections": len(log), "by_rule": dict(Counter(c["rule"] for c in log)),
+                    "near_empty_pages": ocr["empty_pages"]}, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"raw": raw, "normalized": norm, "corrections": len(log), "empty_pages": ocr["empty_pages"]}, indent=1, ensure_ascii=False))
     return 0
 
