@@ -39,7 +39,7 @@ def clean_raw(text: str) -> str:
     text = re.sub(r"\b[IVXLC]{1,7}[ \t]+(?:THE|the|The)[ \t]+[A-Za-z'’ \t]{3,28}?[ \t]+\d{2,3}\b", " ", text)
     text = re.sub(r"\b\d{2,3}[ \t]+(?:THE|the)[ \t]+(?:GLORIOUS|glorious)[ \t]+(?:KORAN|koran)\b", " ", text)
     # footnotes: a line that starts with * or † up to the next blank line
-    text = re.sub(r"(?m)^[ \t]*[*†‡][^\n]*(\n(?![ \t]*\n)[^\n]*)*", "", text)
+    text = re.sub(r"(?m)^[ \t]*[*†‡][^\n]*\n", "", text)   # only the footnote's own line: removing following lines also swallowed the verse's continuation after a page break
     return text
 
 
@@ -58,8 +58,8 @@ def trim_tail(text: str, ref: str) -> str:
     import difflib
     lt, it = letters_index(text)
     g = pr.key(ref)
-    if len(g) < 12 or not lt:
-        return text
+    if len(g) < 12 or not lt or not re.search(r"[.?!:;)\u201d\"]\s*$", ref.strip()):
+        return text      # if the reference verse is itself cut short, what follows may be the real continuation: do not trim
     sm = difflib.SequenceMatcher(None, g, lt, autojunk=False)
     blocks = [b for b in sm.get_matching_blocks() if b.size >= 4]
     if not blocks:
@@ -124,6 +124,14 @@ def clean_furniture(text: str, ref: str) -> str:
         has_furniture = any(FURNITURE.match(w) or "koran" in w.lower() or "rah" in w.lower() for w in run)
         if not at_edge and len(run) >= 8:
             for k in range(j1, j2):      # a long run in the middle of a verse is a footnote; at the end it may be a real continuation, so that is left alone
+                keep[k] = False
+        elif j2 == len(t) and j1 != 0 and re.search(r"[.?!:;)\u201d\"]\s*$", ref.strip()) and len(run) >= 3:
+            for k in range(j1, j2):      # the verse is complete in the reference text, so a trailing run is a footnote, not a continuation
+                keep[k] = False
+        elif j2 == len(t) and j1 != 0 and has_furniture:
+            # at the END of the text: drop the footnote and header, but keep the words that follow them (the verse continues on the next page)
+            last_f = max(k for k, w in enumerate(run) if FURNITURE.match(w) or "koran" in w.lower() or "rah" in w.lower())
+            for k in range(j1, j1 + last_f + 1):
                 keep[k] = False
         elif (at_edge and has_furniture) or (has_furniture and len(run) >= 1 and (len(run) >= 4 or all(FURNITURE.match(w) for w in run))):
             for k in range(j1, j2):
@@ -207,6 +215,70 @@ def repair_with_gutenberg(text: str, gtext: str, vocab: Counter) -> tuple[str, i
     return " ".join(t), changed
 
 
+def extend_truncated(text: str, pages, last_of_sura: bool):
+    """Completeness test against the fresh page OCR: find the verse, then read the words between its end and the next printed verse number.
+    After dropping a footnote and the running header, any words left are the verse's continuation (for example after a page break) and are appended.
+    Returns (text, number of words appended)."""
+    import difflib
+    if pages is None:
+        return text, 0
+    STOP = {"the", "and", "of", "to", "a", "in", "unto", "against", "after", "or", "that", "who", "for", "with", "on", "is", "are", "be", "by", "from", "an",
+            "his", "their", "they", "he", "it", "as", "but", "if", "ye", "thou", "thee", "thy", "your", "this", "those", "whom", "which", "what", "when", "then",
+            "so", "nor", "at", "into", "upon", "we", "our", "us", "you", "him", "will", "shall", "have", "hath", "had", "did", "was", "were", "been", "any"}
+    if last_of_sura and not (text.split() and re.fullmatch(r"[A-Za-z]+", text.split()[-1]) and text.split()[-1].lower() in STOP):
+        return text, 0
+    words, keyw, idx = pages
+    t = text.split()
+    tk = lambda w: re.sub(r"[^a-z]", "", w.lower())
+    g = [tk(w) for w in t if tk(w)]
+    if len(g) < 4:
+        return text, 0
+    best = None
+    for st in idx.get(tuple(g[:3]), []):
+        win = keyw[st: st + len(g) + 60]
+        sm = difflib.SequenceMatcher(None, g, win, autojunk=False)
+        blocks = [b for b in sm.get_matching_blocks() if b.size]
+        m = sum(b.size for b in blocks)
+        if blocks and (best is None or m > best[0]):
+            best = (m, st, blocks[-1].b + blocks[-1].size, m / len(g))
+    if best is None or best[3] < 0.9:
+        return text, 0
+    _, st, endj, _ = best
+    e = st + endj
+    if last_of_sura:    # the continuation runs up to the next sura's heading
+        seg = []
+        for w in words[e: e + 60]:
+            if "rah" in w.lower() and w[0].lower() == "s":
+                break
+            seg.append(w)
+        tail = [w for w in seg if not re.match(r"^[\d\W]+$", w) and not re.match(r"^[A-Z]{2,}[.,]?$", w)]
+        return (text + " " + " ".join(tail), len(tail)) if 1 <= len(tail) <= 30 else (text, 0)
+    seg = []
+    for i in range(e, min(e + 260, len(words))):
+        if re.match(r"^\d{1,3}[.,]$", words[i]) and i + 1 < len(words) and re.match(r"^[A-Za-z(\u2018\u201c'\"]", words[i + 1]):
+            break
+        seg.append(words[i])
+    else:
+        return text, 0           # no next verse number found nearby: do not guess
+    if not seg or any(re.search(r"(?i)revealed|beneficent, the merciful", w) for w in seg):
+        return text, 0
+    hdr = [k for k, w in enumerate(seg) if "rah" in w.lower() or "koran" in w.lower() or "glorious" in w.lower() or re.match(r"^[A-Z]{3,}[.,]?$", w)]
+    if hdr:
+        tail = seg[hdr[-1] + 1:]
+        while tail and (re.match(r"^[\d\W]+$", tail[0]) or re.match(r"^[ivxlcIVXLC]{1,6}$", tail[0])):
+            tail = tail[1:]            # page number or the sura's roman numeral after the header
+    else:
+        # no page header: only continue if the sentence is plainly unfinished (the text ends on a dangling word); a footnote start is never text
+        dangling = bool(t) and re.fullmatch(r"[A-Za-z]+", t[-1]) is not None and t[-1].lower() in STOP
+        if not dangling or (seg and re.match(r"^(?:[*\u2020\u2021]|\d{1,2}\b)", seg[0])):
+            return text, 0
+        tail = seg
+    tail = [w for w in tail if not re.match(r"^[\d\W]+$", w) and not re.match(r"^[A-Z]{2,}[.,]?$", w) and not re.match(r"^[ivxlcIVXLC]{1,6}$", w)]   # page numbers, all-capital header words, roman numerals
+    if len(tail) < 1 or len(tail) > 200:
+        return text, 0
+    return text + " " + " ".join(tail), len(tail)
+
+
 def sura_starts(letters: str, idx: list[int], guten, gkeys, offs):
     """Raw-text position near each sura's first verse, from the anchor chain."""
     gfull = "".join(gkeys[r] for r in sorted(guten))
@@ -269,7 +341,7 @@ def parse_scan(path: Path, guten, gkeys, offs, sizes):
                 end = h.start()
         text = re.sub(r"\s+", " ", raw[st:end]).strip()
         words = text.split(" ")
-        text = " ".join(words[: int(max(ref_len / 5.0, 4) * 1.6) + 10])
+        text = " ".join(words[: int(max(ref_len / 5.0, 4) * 2.4) + 40])   # generous: footnotes inside a verse use up words; the clean-up and tail-trimming steps remove the excess
         text = trim_tail(text, guten[r])
         if text:
             verses[r] = text
@@ -404,6 +476,35 @@ def main() -> int:
     verdicts = Counter(x["verdict"] for x in rows)
     report["resolved_by_second_evidence"] = dict(resolved_by)
     report["verdicts"] = {k: v for k, v in verdicts.items() if v}
+    # --- completeness: append continuation words that the reading (or Gutenberg's text) lacks after a page break
+    if pages_:
+        last_ref = {su: max(v for (s2, v) in guten if s2 == su) for su in {r[0] for r in guten}}
+        extended, added = [], 0
+        for x in rows:
+            if x["verdict"] == "image-checked" or not x["text"]:
+                continue
+            new_text, n = extend_truncated(x["text"], pages_, x["verse"] == last_ref[x["sura"]])
+            if n:
+                x["text"], x["extended_words"] = new_text, n
+                extended.append(f"{x['sura']}:{x['verse']}")
+                added += n
+        report["extended_after_page_break"] = {"verses": len(extended), "words_added": added, "refs": extended[:80]}
+    # --- small recorded fixes (data/processed/pickthall/text-fixes.json): continuations read from the page OCR and cosmetic OCR artifacts
+    tf_path = OUT / "text-fixes.json"
+    tf = json.loads(tf_path.read_text()) if tf_path.exists() else {"append": {}, "replace": {}}
+    applied = 0
+    for x in rows:
+        ref = f"{x['sura']}:{x['verse']}"
+        if x["verdict"] == "image-checked":
+            continue
+        for old_, new_ in tf["replace"].get(ref, []):
+            if old_ in x["text"]:
+                x["text"] = x["text"].replace(old_, new_, 1)
+                applied += 1
+        if ref in tf["append"] and not x["text"].rstrip().endswith(tf["append"][ref].strip()):
+            x["text"] = x["text"].rstrip() + tf["append"][ref]
+            applied += 1
+    report["recorded_text_fixes_applied"] = applied
     # --- verses a person has read against the page image (data/processed/pickthall/image-checks.json): these decisions win over everything else
     ic_path = OUT / "image-checks.json"
     ic = json.loads(ic_path.read_text()) if ic_path.exists() else {}
@@ -438,7 +539,7 @@ def main() -> int:
             why = x["verdict"]
         elif x["verdict"] in ("confirmed-by-alignment", "pair-with-gutenberg", "words-confirmed", "image-checked"):
             why = None
-        elif tlen > glen * 1.35 + 25:
+        elif tlen > glen * 1.35 + 25 and not x.get("extended_words"):
             why = "text much longer than Gutenberg (page furniture or a footnote may have leaked in)"
         elif glen > 20 and tlen < glen * 0.6:
             why = "text much shorter than Gutenberg (a boundary may be misplaced)"

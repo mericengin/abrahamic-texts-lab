@@ -28,6 +28,8 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 - `scripts/pickthall_pageocr_check.py` and clean-up passes in `pickthall_build.py` (page furniture, broken hyphens, isolated OCR slips repaired from the fresh page OCR and the Gutenberg token).
 
+- Completeness pass in `pickthall_build.py`: verses that run across a page break had lost their continuation (a bug in my first rebuild that also affected the Gutenberg text); the build now finds the verse in the fresh page OCR and appends the missing words when a page header marks the break or the sentence is plainly unfinished; narrower footnote removal; recorded text fixes (`text-fixes.json`).
+
 ### Found
 - Gutenberg's Pickthall text is cut short in places (8:72, 2:85) and has words the 1930 book lacks or lacks words it has (20:109); the 1930 print itself has a misprint at 5:89.
 - **The Project Gutenberg #16955 "Pickthall" is not the 1930 text** (593 verses differ where three or more scans agree), so it is no longer used.

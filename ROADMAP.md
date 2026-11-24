@@ -90,7 +90,8 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [x] Rebuild the Pickthall 1930 text from the OCR of four scans by vote (`scripts/pickthall_build.py`): 96% of verses decided by agreement; numbering map built (the 1930 book numbers 483 verses differently from the standard)
 - [x] Check the 38 hardest Pickthall verses against the page images (done: for example 2:85 and 8:72 are longer in the 1930 book than in Gutenberg, 20:109 lacks the word 'word', 5:89 has a printer's misprint 'whch')
 - [x] Cross-check the vote-only verses and a seeded sample of 200 agreed verses against a fresh OCR of the page images; a clean-up pass removes leaked page furniture and shared OCR slips (shared slips found at roughly 0.5 to 1.5% of verses)
-- [ ] Read the 126 vote-only Pickthall verses one by one against the page images (only 38 hard verses are proven against the image so far)
+- [x] Completeness across page breaks: the Gutenberg text and the first rebuild were cut short where a verse runs across a page; the build now restores the continuation from the page OCR (67 verses, about 1,500 words) and applies recorded fixes
+- [ ] Read the vote-only Pickthall verses one by one against the page images (only 38 hard verses are proven against the image so far; the fresh page OCR confirms about 63% of the vote-only verses and 92.5% of a 200-verse sample of agreed verses)
 - [x] Compare the Project Gutenberg #16955 Pickthall lines with the 1930 text: they are NOT the 1930 text (593 verses where three or more scans agree on a different wording); the Gutenberg lines are not used
 - [x] Owner confirms the German Qur'an layer: Henning 1901 (confirmed 2026-11-24)
 - [x] Obtain the Henning scan (downloaded 2026-11-24)

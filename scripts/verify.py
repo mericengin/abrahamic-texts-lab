@@ -332,9 +332,21 @@ def verify_pickthall() -> None:
         na = ag["confirmed"] + ag["short"] + len(ag["mismatch"]) + len(ag["not found"])
         check("pickthall", "cross-check against a fresh OCR of the page images (a modern engine reading the same pages)", None,
               f"vote-only verses: {vt['confirmed']} of {nv} confirmed outright; sampled agreed verses (200, seeded): {ag['confirmed']} of {na} confirmed, {ag['short']} too short to test. "
-              f"I examined the {len(ag['mismatch']) + len(ag['not found'])} sampled agreed verses that were not confirmed: in all of them our wording was right and the fresh OCR was the noisy side (diacritics, dash spacing), "
+              f"In an earlier pass I examined the sampled agreed verses that were not confirmed: our wording was right and the fresh OCR was the noisy side (diacritics, dash spacing), "
               f"but three had artifacts in our text (two missing spaces or a stray character, and one letter slip shared by all the scans, 42:34 'causech' for 'causeth', now repaired). "
               f"So shared slips exist at roughly 0.5 to 1.5% of verses; the vote-only verses were not examined one by one.", pageocr=r)
+    ext = build.get("extended_after_page_break")
+    if ext:
+        rows_ = json.loads((base / "pickthall-1930-built.json").read_text())
+        stop = {"the", "and", "of", "to", "a", "in", "unto", "against", "after", "or", "that", "who", "for", "with", "on", "is", "are", "be", "by", "from", "an", "his", "their",
+                "they", "he", "it", "as", "but", "if", "ye", "thou", "thee", "thy", "your", "this", "those", "whom", "which", "what", "when", "then", "so", "nor", "at", "into",
+                "upon", "we", "our", "us", "you", "him", "will", "shall", "have", "hath", "had", "did", "was", "were", "been", "any"}
+        dang = [r for r in rows_ if r["text"].split() and re.fullmatch(r"[A-Za-z]+", r["text"].split()[-1]) and r["text"].split()[-1].lower() in stop]
+        check("pickthall", "completeness across page breaks (a defect found and fixed)", None,
+              f"the Gutenberg text and the first rebuild were cut short wherever a verse runs across a page break (for example 2:102, 2:233, 5:89, 8:72, 10:24). "
+              f"{ext['verses']} verses had their missing continuation restored from the page text ({ext['words_added']:,} words) and {build.get('recorded_text_fixes_applied', 0)} recorded small fixes were applied. "
+              f"Verses that still end on a dangling word without punctuation: {len(dang)}; most of these only lack a final question mark or full stop that the OCR dropped.",
+              extended=ext["verses"], words_added=ext["words_added"], still_dangling=len(dang))
     check("pickthall", "caveat: the four scans may share some OCR errors", None,
           "agreement between scans proves the OCR is consistent, not that it equals the printed page; scans of the same printing by the same digitizer can repeat the same slip. "
           "Verses where the scans are identical are very likely right, but only a check against the page images proves it.")
