@@ -2,17 +2,21 @@
 
 Nine directions (R1 to R9) share one spine question:
 
-> How is the Genesis and creation tradition reused and transformed across Jewish, Christian, Gnostic and Qur'anic texts?
+> How is the Genesis and creation tradition reused and transformed across Jewish, Christian, Qur'anic and (in Phase 2) Gnostic and Second Temple texts?
 
-Each direction below states its question, why it matters, the data it needs, the method, how it will be evaluated, the outputs, and its limits. Status for every direction is **not started**; progress is tracked as checkboxes in [ROADMAP.md](../ROADMAP.md). Evaluation plans are decided before results are seen. Nothing here is a finding.
+Each direction below states its question, why it matters, the data it needs, the method, how it will be evaluated, the outputs, and its limits. Each direction is delivered in two phases: **Phase 1** on the three canons (Hebrew Bible, New Testament, Qur'an), **Phase 2** across the full corpus. Phase 2 extends each direction and drops nothing. Status for every direction is **not started**; progress is tracked as checkboxes in [ROADMAP.md](../ROADMAP.md). Evaluation plans are decided before results are seen. Nothing here is a finding.
 
-Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others); then R7, R8, R9, which also need R1 and the R2 gold links.
+The Data sections below describe the full (Phase 2) corpus; Phase 1 uses the subset named in each Phase 1 scope. Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others); then R7, R8, R9, which also need R1 and the R2 gold links.
 
 ---
 
 ## R1. Unified, cleaned, aligned corpus
 
 **Question.** Can the scattered open resources be integrated into one corpus with consistent metadata, stable verse-level IDs, aligned editions and translations, and a license recorded for every row?
+
+**Phase 1 scope.** Hebrew Bible, New Testament and Qur'an, each in the original language, English (WEB; Qur'an translation to be chosen) and German (Luther 1912; Qur'an from a 1901 or 1888 scan with OCR), aligned at verse level. Optional Septuagint layer.
+
+**Phase 2 scope.** Add the Dead Sea Scrolls, Apocrypha and Pseudepigrapha, Nag Hammadi and other Gnostic texts (Coptic), the Gospel of Judas if its source is resolved, and optionally Syriac and Ge'ez, with fragmentary and uncertain texts flagged.
 
 **Why.** Everything else depends on it, and good integration is real, publishable work in its own right (a data paper with a data card).
 
@@ -32,6 +36,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 
 **Question.** Where do texts quote, echo or rework one another (Torah in the Gospels, Gospel parallels, the Bible in the Qur'an, Gnostic reworkings of Genesis), and how confident can we be?
 
+**Phase 1 scope.** The Hebrew Bible in the New Testament (explicit quotations and allusions), Gospel parallels, and the Bible in the Qur'an. Gold set from published scholarly sources, reviewed by a domain expert. The Septuagint layer helps here because many New Testament quotations follow it.
+
+**Phase 2 scope.** Add Second Temple and Gnostic reworkings of Genesis, and the Dead Sea Scrolls; extend and re-review the gold set.
+
 **Why.** It is the core engine of the spine question and the source of the most readable visualizations.
 
 **Data.** The aligned corpus (R1); a gold set of parallels drawn from published scholarly sources and reviewed by a domain expert.
@@ -49,6 +57,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 ## R3. Low-resource tooling for Coptic (then Syriac)
 
 **Question.** How well can POS tagging, lemmatization and machine translation into English be adapted to Coptic, and does it enable reading the Gnostic texts?
+
+**Phase 1 scope.** A Coptic biblical slice. Baselines and a model adapted on the UD Coptic-Scriptorium treebank (Mark, 1 Corinthians, Ruth, Jonah and other texts), with POS tagging, lemmatization and an honest evaluation. This builds and proves the low-resource pipeline without needing Gnostic texts.
+
+**Phase 2 scope.** Domain adaptation to Gnostic Coptic texts, a Coptic-to-English translation experiment with our own translations, and Syriac tooling after a resource audit.
 
 **Why.** Most Gnostic material is Coptic. Tools help both the humanities and low-resource NLP.
 
@@ -68,6 +80,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 
 **Question.** Do the Pauline letters cluster as scholars claim, and where do Gnostic texts fall stylistically relative to canonical ones?
 
+**Phase 1 scope.** The Pauline letters in Greek (clustering against scholarly consensus) and the Qur'an's chronological layers in Arabic, both well-studied test cases.
+
+**Phase 2 scope.** Compare Gnostic and apocryphal texts stylistically with the canonical ones, with the same stated limits.
+
 **Why.** A well-known test of method against scholarly consensus, and a chance to show honest uncertainty.
 
 **Data.** Greek NT with morphology, the Coptic Gnostic texts, and later other Greek material; controlled for translation by using original languages.
@@ -85,6 +101,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 ## R5. Concept evolution via diachronic embeddings
 
 **Question.** How do terms such as logos, spirit, wisdom/sophia and light shift in meaning across traditions and periods?
+
+**Phase 1 scope.** Comparison of concepts across the three canons, in the original languages, for example spirit (ruach, pneuma, rūḥ), word (dabar, logos, kalima) and light. Cross-tradition comparison, since time slices are few.
+
+**Phase 2 scope.** Add Second Temple and Gnostic usages (logos, wisdom/sophia, light) and a wider period spread.
 
 **Why.** It ties lexical semantics and word-sense work to the corpus and gives the project a "how language changes" story.
 
@@ -104,6 +124,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 
 **Question.** Can topics and motifs (dualism, creation narratives, the demiurge) be mined across the corpus and validated by scholars?
 
+**Phase 1 scope.** Creation, covenant, prophecy and judgment motifs, with an annotation scheme and expert-validated labels.
+
+**Phase 2 scope.** Add dualism and the demiurge, and the Gnostic and Second Temple material.
+
 **Why.** It surfaces patterns the reuse analysis misses and gives structured data for the reader.
 
 **Data.** The aligned corpus and a motif scheme drafted from scholarly literature.
@@ -121,6 +145,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 ## R7. Long-context scripture benchmark
 
 **Question.** Can question answering and cross-reference tasks over the whole corpus measure long-context reasoning without being confounded by memorization?
+
+**Phase 1 scope.** A benchmark built on the three canons and the Phase 1 gold links, with memorization controls (these canons are among the most memorized texts there are).
+
+**Phase 2 scope.** Extend to the whole corpus. Less-memorized texts provide additional controls.
 
 **Why.** Long-context and RAG evaluation is active, and this corpus offers verifiable ground truth through the R2 gold links.
 
@@ -140,6 +168,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 
 **Question.** How do LLMs behave on religious texts across traditions: memorization versus reasoning, consistency across translations, and differences in treatment across traditions?
 
+**Phase 1 scope.** A descriptive study across the three canons and across translations.
+
+**Phase 2 scope.** Extend to the full corpus and re-run; compare behavior on widely memorized and rarely seen texts.
+
 **Why.** Comparative evaluation across religions is interesting and publishable, and it is easy to do badly.
 
 **Data.** Matched prompt sets across traditions and translations, built from the corpus and reviewed for fairness.
@@ -157,6 +189,10 @@ Dependency order: R1 first; then R2, R3, R4, R5, R6 (R2 and R3 feed the others);
 ## R9. RAG scholarly research assistant
 
 **Question.** Can a retrieval-augmented assistant answer questions about the corpus with exact verse and source citations, and can we measure how faithful its answers are?
+
+**Phase 1 scope.** A RAG assistant over the three canons with verse-level citations and a faithfulness evaluation.
+
+**Phase 2 scope.** Extend retrieval to the full corpus, with provenance and uncertainty flags for fragmentary texts.
 
 **Why.** It gives the project a demo and a rigorous evaluation alongside the research.
 

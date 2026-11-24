@@ -14,21 +14,32 @@ Third-party texts are not committed to this repository. `scripts/fetch_sources.p
 
 `ready` = checked and safe to fetch. `verify` = a detail is unconfirmed. `manual` = needs a human step. `blocked` = no usable open source.
 
+## Phase 1: the three canons (original, English, German)
+
 | ID | Text | Language | License | Status |
 |---|---|---|---|---|
 | hebrew-morphhb | [Open Scriptures Hebrew Bible](https://github.com/openscriptures/morphhb) | Biblical Hebrew | CC BY 4.0 (WLC text public domain) | ready |
 | greek-morphgnt | [MorphGNT SBLGNT](https://github.com/morphgnt/sblgnt) | Koine Greek | CC BY-SA 3.0 (morphology) | ready |
 | greek-sblgnt-text | [SBLGNT, Faithlife](https://github.com/Faithlife/SBLGNT) | Koine Greek | CC BY 4.0 per README; MorphGNT says EULA applies | verify |
 | quran-tanzil-arabic | [Tanzil Quran text](https://tanzil.net/docs/text_license) | Classical Arabic | verbatim copies only, attribution and link required | manual |
+| english-web-deutero | [WEB Classic with Deuterocanon](https://ebible.org/find/details.php?id=eng-web) | English (Hebrew Bible and New Testament; Deuterocanon is Phase 2) | Public domain | ready |
+| german-luther-1912 | [Luther 1912](https://ebible.org/bible/details.php?id=deu1912) | German (Hebrew Bible and New Testament) | Public domain (not yet opened) | verify |
+| english-quran | none chosen yet | English | unresolved | blocked |
+| german-quran-henning | [Henning 1901 scan](https://archive.org/details/derkoran00henn) | German | Public domain probable, unverified; OCR needed | verify |
+| septuagint-first1k | [First1KGreek tlg0527](https://github.com/OpenGreekAndLatin/First1KGreek) | Koine Greek (optional layer) | CC BY-SA 4.0 (repo level) | verify |
+| coptic-ud | [UD Coptic-Scriptorium](https://github.com/UniversalDependencies/UD_Coptic-Scriptorium) | Coptic (R3 biblical slice) | CC BY 4.0 | ready |
+
+## Phase 2: the full corpus
+
+| ID | Text | Language | License | Status |
+|---|---|---|---|---|
 | dss-etcbc | [ETCBC Dead Sea Scrolls](https://github.com/ETCBC/dss) | Hebrew / Aramaic | CC BY-NC 4.0 | ready |
 | coptic-scriptorium | [Coptic SCRIPTORIUM](https://github.com/CopticScriptorium/corpora) (Thomas, Pistis Sophia, Mysteries of John) | Coptic | CC BY 3.0/4.0 default | ready |
-| coptic-ud | [UD Coptic-Scriptorium](https://github.com/UniversalDependencies/UD_Coptic-Scriptorium) | Coptic | CC BY 4.0 | ready |
-| english-web-deutero | [WEB Classic with Deuterocanon](https://ebible.org/find/details.php?id=eng-web) | English | Public domain | ready |
-| german-luther-1912 | [Luther 1912](https://ebible.org/bible/details.php?id=deu1912) | German | Public domain (not yet opened) | verify |
 | enoch-charles | [Book of Enoch, Charles](https://www.gutenberg.org/ebooks/77935) | English | Public domain (US) | verify |
 | jubilees-charles | [Book of Jubilees, Charles](https://sacred-texts.com/bib/jub/) | English | Public domain | verify |
-| septuagint-first1k | [First1KGreek tlg0527](https://github.com/OpenGreekAndLatin/First1KGreek) | Koine Greek | CC BY-SA 4.0 (repo level) | verify |
 | gospel-of-judas | none yet | Coptic / English | unresolved | blocked |
+
+Phase 2 also needs sources not yet in the manifest: English translations for Nag Hammadi (the [Other Gospels](https://othergospels.com/about/) public-domain translations, to verify text by text), Mead's Pistis Sophia, German layers where open ones exist (Kautzsch 1900 for Enoch, a working translation of Thomas, Schmidt 1905 for Pistis Sophia), and Syriac and Ge'ez sources.
 
 ## Known gaps
 

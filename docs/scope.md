@@ -12,7 +12,18 @@ The Abrahamic texts are among the most studied in history, yet the digital resou
 - **Students and scholars** who want reproducible, citable starting points and a place to check machine output against the sources.
 - **Computational-humanities and NLP researchers** who want a clean corpus, evaluation sets and baselines for ancient and low-resource languages.
 
+## Two phases
+
+The goals are delivered in two phases. Phase 2 extends every Phase 1 goal and drops none.
+
+- **Phase 1, the three canons.** Hebrew Bible, New Testament and Qur'an, each in the original language, English and German (three layers per text). Done means all nine research directions (R1 to R9) are implemented and working on these texts and presented in the web app. Release v1.0.0.
+- **Phase 2, the full corpus.** Adds the Dead Sea Scrolls, the Apocrypha and Pseudepigrapha, Nag Hammadi and other Gnostic texts (and the Gospel of Judas if its source is resolved), with Coptic, Aramaic and optionally Syriac and Ge'ez. Done means all nine directions are implemented and working across everything. Release v2.0.0.
+
+The order is a research decision: prove the whole pipeline on texts that have clean licenses, three complete language layers and extensive reference literature, then apply it to denser, more fragmentary and harder-to-source material. Milestones and checklists are in [ROADMAP.md](../ROADMAP.md).
+
 ## The corpus
+
+The table below is the full (Phase 2) corpus. Phase 1 uses the Hebrew Bible, New Testament and Qur'an rows only.
 
 Candidate material (see [SOURCES.md](../SOURCES.md) for the license-checked list):
 

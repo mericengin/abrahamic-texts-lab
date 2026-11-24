@@ -8,6 +8,8 @@ This is a record of how the project handles licenses and sensitive material. It 
 
 **Third-party texts are never committed.** `data/raw/` is git-ignored. The fetch script retrieves from the original source and writes a provenance record (URL, time, license, checksum or commit).
 
+Phase 1 (the three canons) avoids the non-commercial restriction altogether: the Dead Sea Scrolls data and the Tanzil translations belong to Phase 2 or are not bundled. What remains in Phase 1 is attribution, ShareAlike (MorphGNT) and the verbatim rule for the Tanzil Arabic text. The project is still non-commercial by intent.
+
 ### Rules by license type
 
 | Type | Examples here | What it means |

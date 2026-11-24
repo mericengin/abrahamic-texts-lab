@@ -2,6 +2,7 @@
 """Fetch raw source texts listed in data/sources.toml into data/raw/<id>/.
 
 Safe by default: with no flags it only prints a plan and downloads nothing.
+Use --phase 1 or --phase 2 to limit the plan to one project phase.
 Pass --execute to actually fetch. Only sources whose status is "ready" are
 fetched; "verify", "manual" and "blocked" sources are reported and skipped.
 
@@ -33,7 +34,7 @@ def load_sources() -> list[dict]:
 
 
 def describe(src: dict) -> str:
-    return f"{src['id']:<22} {src['status']:<8} {src['kind']:<6} {src['license']}"
+    return f"{src['id']:<22} P{src['phase']} {src['status']:<8} {src['kind']:<6} {src['license']}"
 
 
 def fetch_file(src: dict, dest: Path) -> dict:
@@ -83,6 +84,7 @@ def fetch(src: dict) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("ids", nargs="*", help="source ids to act on (default: all)")
+    ap.add_argument("--phase", type=int, choices=(1, 2), help="only act on sources planned for this project phase")
     ap.add_argument("--execute", action="store_true", help="actually download (default is a dry-run plan)")
     args = ap.parse_args()
 
@@ -92,7 +94,10 @@ def main() -> int:
     if unknown:
         print(f"unknown ids: {', '.join(unknown)}", file=sys.stderr)
         return 2
-    chosen = [s for s in sources if not args.ids or s["id"] in args.ids]
+    chosen = [
+        s for s in sources
+        if (not args.ids or s["id"] in args.ids) and (args.phase is None or s["phase"] == args.phase)
+    ]
 
     print(("EXECUTE" if args.execute else "DRY RUN (nothing will be downloaded)") + "\n")
     for src in chosen:

@@ -16,6 +16,7 @@ license = "CC-BY-4.0"
 license_url = "https://github.com/openscriptures/morphhb/blob/master/LICENSE.md"
 attribution = "Open Scriptures Hebrew Bible Project, https://github.com/openscriptures/morphhb"
 status = "ready"
+phase = 1
 notes = "Annotations CC BY 4.0; underlying WLC text public domain."
 
 [[source]]
@@ -29,6 +30,7 @@ license = "CC-BY-SA-3.0"
 license_url = "https://creativecommons.org/licenses/by-sa/3.0/"
 attribution = "Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition, v6.12, DOI 10.5281/zenodo.376200"
 status = "ready"
+phase = 1
 notes = "ShareAlike applies to the morphology. README says the SBLGNT text itself falls under the SBLGNT EULA; see greek-sblgnt-text."
 
 [[source]]
@@ -42,6 +44,7 @@ license = "CC-BY-4.0 (per README; conflicts with MorphGNT's EULA pointer)"
 license_url = "https://github.com/Faithlife/SBLGNT"
 attribution = "Copyright 2010 Society of Biblical Literature and Logos Bible Software"
 status = "verify"
+phase = 1
 notes = "sblgnt.com/license was unreachable on 2026-11-24, so the EULA could not be read. Recheck before publishing the text."
 
 [[source]]
@@ -55,6 +58,7 @@ license = "Tanzil terms (verbatim copies only)"
 license_url = "https://tanzil.net/docs/text_license"
 attribution = "Tanzil Quran Text, Tanzil Project, https://tanzil.net"
 status = "manual"
+phase = 1
 notes = "Download requires ticking the terms box in a browser. Text must not be modified; the notice must travel with every copy or derived file. Keep annotations in separate layers."
 
 [[source]]
@@ -68,6 +72,7 @@ license = "CC-BY-NC-4.0"
 license_url = "https://github.com/ETCBC/dss/blob/master/LICENSE"
 attribution = "Naaijer, M., & Roorda, D. (2019) Dead Sea Scrolls in TF format based on Abegg's data. ETCBC."
 status = "ready"
+phase = 2
 notes = "Non-commercial only. This constrains the whole project: never monetize."
 
 [[source]]
@@ -82,6 +87,7 @@ license = "CC-BY-3.0/4.0 (repo default; per-file lines not yet checked)"
 license_url = "https://github.com/CopticScriptorium/corpora"
 attribution = "Coptic SCRIPTORIUM corpora, release v6.2.0, DOI 10.5281/zenodo.17917497"
 status = "ready"
+phase = 2
 notes = "Do not add sahidica.nt until its special license has been read. mysteries-john content not yet confirmed to be the Apocryphon of John."
 
 [[source]]
@@ -95,6 +101,7 @@ license = "CC-BY-4.0"
 license_url = "https://github.com/UniversalDependencies/UD_Coptic-Scriptorium/blob/master/LICENSE.txt"
 attribution = "UD Coptic-Scriptorium treebank, Universal Dependencies"
 status = "ready"
+phase = 1
 notes = "About 59k tokens, no Gnostic texts. Useful for tagger training and evaluation. NT portions derive from Sahidica (see its license)."
 
 [[source]]
@@ -109,6 +116,7 @@ license = "Public Domain"
 license_url = "https://ebible.org/find/details.php?id=eng-web"
 attribution = "World English Bible, eBible.org (trademark: do not call an edited text the World English Bible)"
 status = "ready"
+phase = 1
 notes = "Deuterocanon is partly revised from older texts, so quality is uneven."
 
 [[source]]
@@ -123,6 +131,7 @@ license = "Public Domain (per search results; page not opened)"
 license_url = "https://ebible.org/bible/details.php?id=deu1912"
 attribution = "Luther Bible 1912, eBible.org"
 status = "verify"
+phase = 1
 notes = "URL follows eBible's naming pattern but was not confirmed. Check the details page first."
 
 [[source]]
@@ -137,6 +146,7 @@ license = "Public Domain (US)"
 license_url = "https://www.gutenberg.org/ebooks/77935"
 attribution = "R. H. Charles and W. O. E. Oesterley, via Project Gutenberg #77935"
 status = "verify"
+phase = 2
 notes = "From search results only. Confirm the file URL and strip the Gutenberg header/footer before use."
 
 [[source]]
@@ -150,6 +160,7 @@ license = "Public Domain"
 license_url = "https://sacred-texts.com/bib/jub/"
 attribution = "R. H. Charles, Apocrypha and Pseudepigrapha of the Old Testament, Oxford 1913"
 status = "verify"
+phase = 2
 notes = "From search results only. Pick one host (Sacred Texts, CCEL, archive.org) and confirm its terms."
 
 [[source]]
@@ -164,6 +175,7 @@ license = "CC-BY-SA-4.0 (repo-level)"
 license_url = "https://github.com/OpenGreekAndLatin/First1KGreek/blob/master/license.md"
 attribution = "Open Greek and Latin, First1KGreek"
 status = "verify"
+phase = 1
 notes = "Not yet confirmed that this is Swete's edition. Open a work-level __cts__.xml first. Do not use the Rahlfs text."
 
 [[source]]
@@ -177,4 +189,34 @@ license = "unresolved"
 license_url = ""
 attribution = ""
 status = "blocked"
+phase = 2
 notes = "No open Coptic edition found. The only free English text found has no named translator and a conflicting site copyright footer. Options: ask for permission, transcribe from published images, or defer."
+
+[[source]]
+id = "english-quran"
+name = "English Qur'an translation (not yet chosen)"
+language = "English"
+kind = "manual"
+url = ""
+format = ""
+license = "unresolved"
+license_url = ""
+attribution = ""
+phase = 1
+status = "blocked"
+notes = "Needs a translation with a clear license. Older public-domain translations (for example Pickthall 1930, Rodwell 1861, Palmer 1880) are candidates but rights and edition must be verified first. Tanzil translations are non-commercial and not bundled. Owner decides."
+
+[[source]]
+id = "german-quran-henning"
+name = "Der Koran, Max Henning (Reclam, 1901)"
+language = "German"
+kind = "manual"
+url = "https://archive.org/details/derkoran00henn"
+format = "scanned book (OCR needed, probably Fraktur type)"
+license = "Public Domain probable (translator died 1927); not yet verified"
+license_url = "https://archive.org/details/derkoran00henn"
+attribution = "Max Henning, Der Koran, Leipzig: Reclam, 1901"
+phase = 1
+status = "verify"
+notes = "From search results only. One source suggests Henning may be a pseudonym for August Müller; verify the rights. Rueckert 1888 (Halle digital copy) is an alternative. Expect OCR errors; the quality must be measured before use."
+

@@ -4,6 +4,20 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+## [0.0.2] - 2026-11-24
+
+Planning release. Still no texts downloaded and no analysis run.
+
+### Added
+- Two-phase plan: Phase 1 delivers all nine research directions on the three canons (Hebrew Bible, New Testament, Qur'an) in the original language, English and German; Phase 2 extends all nine to the full corpus. See `ROADMAP.md`, `docs/scope.md` and `docs/research-questions.md`.
+- `phase` field on every source in `data/sources.toml`, a `--phase` filter in `scripts/fetch_sources.py`, and a manifest test for it.
+- Two Phase 1 sources: an English Qur'an translation (blocked until chosen) and the Henning 1901 German Qur'an (verify).
+- Phase 1 and Phase 2 scope for each research direction.
+
+### Changed
+- Roadmap restructured from milestones M0 to M6 into Phase 0, Phase 1 and Phase 2. No goal was removed.
+- Spine question widened to name Phase 2 Gnostic and Second Temple texts explicitly.
+
 ## [0.0.1] - 2026-11-24
 
 Setup release. No texts downloaded, no analysis run.

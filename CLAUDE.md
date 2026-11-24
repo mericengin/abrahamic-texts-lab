@@ -6,6 +6,8 @@ Guidance for Claude Code (and any AI coding assistant) working in this repositor
 
 Abrahamic Texts Lab is a free, non-profit research workspace and public web app for exploring the Abrahamic texts computationally: Hebrew Bible, New Testament, Qur'an, Dead Sea Scrolls, Apocrypha and Pseudepigrapha, and Gnostic writings. It is also intended to support an academic submission in computational humanities. The scope and definition are in [docs/scope.md](docs/scope.md); the nine research directions (R1 to R9) are in [docs/research-questions.md](docs/research-questions.md) and tracked in [ROADMAP.md](ROADMAP.md).
 
+**Phases.** Goals are delivered in two phases and Phase 2 extends every Phase 1 goal (nothing is dropped). **Phase 1:** all nine directions implemented and working on the three canons (Hebrew Bible, New Testament, Qur'an) in the original language, English and German. **Phase 2:** all nine across the full corpus (Dead Sea Scrolls, Apocrypha and Pseudepigrapha, Nag Hammadi and Gnostic texts, Syriac and Ge'ez optional). Do not start Phase 2 work until Phase 1 is complete, unless the owner says otherwise. Every source in `data/sources.toml` carries a `phase`.
+
 **Current state:** setup stage. The repo contains docs, a source manifest, a fetch script and manifest tests. No texts have been downloaded and no analysis exists. Never imply otherwise in code, docs, results or the UI. Do not build features from a later milestone unless asked.
 
 ## Hard rules (never violate)
@@ -41,7 +43,7 @@ Layers: sources (raw, untouched) -> parsers -> a unified corpus with stable iden
 
 - Python 3.11+. The fetch script and tests use the standard library only. Add dependencies only with a reason, and record significant choices as ADRs in `docs/adr/` (create the folder when the first ADR is written).
 - Tests: `python3 -m unittest discover -s tests`
-- Dry-run fetch plan: `python3 scripts/fetch_sources.py`
+- Dry-run fetch plan: `python3 scripts/fetch_sources.py` (add `--phase 1` or `--phase 2` to filter)
 - Fetch one source (owner approval required first): `python3 scripts/fetch_sources.py --execute <id>`
 
 If a command does not work, check this file, `README.md` and `ROADMAP.md` rather than guessing, and tell the user what is missing.
@@ -67,7 +69,7 @@ If a command does not work, check this file, `README.md` and `ROADMAP.md` rather
 
 **Adding a source**
 1. Read the license on the primary page; quote the key sentences in `data/sources.toml` `notes` and `SOURCES.md`.
-2. Add the entry with status `verify` until the license and URL are both confirmed, then `ready`.
+2. Add the entry with its `phase` (1 or 2) and status `verify` until the license and URL are both confirmed, then `ready`.
 3. Add a parser and tests, then ask the owner before fetching.
 
 **Adding an analysis (R2 to R9)**

@@ -5,7 +5,7 @@
 <p align="center"><b>A free, open research workspace for reading the Abrahamic texts side by side, computationally, and saying plainly what the evidence does and does not show.</b></p>
 
 <p align="center">
-  <img alt="version 0.0.1" src="https://img.shields.io/badge/version-0.0.1-e8b45a">
+  <img alt="version 0.0.2" src="https://img.shields.io/badge/version-0.0.2-e8b45a">
   <img alt="python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-3776ab">
   <img alt="status: setup stage" src="https://img.shields.io/badge/status-setup%20stage-6b7785">
   <img alt="use: non-commercial" src="https://img.shields.io/badge/use-non--commercial-7fc8a9">
@@ -48,7 +48,7 @@ It is built for anyone curious about these traditions and their texts, and struc
 
 Nine research directions share one backbone. To keep the work a question and not just a corpus, they are anchored to a single thread:
 
-> **How is the Genesis and creation tradition reused and transformed across Jewish, Christian, Gnostic and Qur'anic texts?**
+> **How is the Genesis and creation tradition reused and transformed across Jewish, Christian, Qur'anic and (in Phase 2) Gnostic and Second Temple texts?**
 
 | # | Direction | Role in the spine |
 |---|---|---|
@@ -63,6 +63,27 @@ Nine research directions share one backbone. To keep the work a question and not
 | R9 | RAG scholarly research assistant | Answers with exact verse citations and a faithfulness evaluation |
 
 Each direction has a question, data needs, a method, an evaluation and stated limits in [docs/research-questions.md](docs/research-questions.md), and a tickable checklist in the [roadmap](ROADMAP.md). All nine are currently **not started**.
+
+## Two phases
+
+All nine directions are delivered in two phases, so everything is built and proven on well-resourced texts before moving to the harder, more fragmentary ones. Phase 2 extends every Phase 1 goal; nothing is dropped.
+
+| | **Phase 1: the three canons** | **Phase 2: the full corpus** |
+|---|---|---|
+| **Texts** | Hebrew Bible, New Testament, Qur'an | Phase 1 plus the Dead Sea Scrolls, Apocrypha and Pseudepigrapha, Nag Hammadi and other Gnostic texts (incl. the Gospel of Judas if its source is resolved), optionally Syriac and Ge'ez |
+| **Languages** | Original language, English and German, three layers per text | Adds Coptic (Sahidic), Aramaic, optionally Syriac and Ge'ez |
+| **Done means** | **All nine directions (R1 to R9) implemented and working on the three canons, presented in the web app** | **All nine directions implemented and working across everything discussed** |
+| **Release** | v1.0.0 | v2.0.0 |
+
+Phase 1 covers:
+
+| Text | Original | English | German |
+|---|---|---|---|
+| Hebrew Bible | Biblical Hebrew | World English Bible | Luther 1912 |
+| New Testament | Koine Greek | World English Bible | Luther 1912 |
+| Qur'an | Classical Arabic | translation to be chosen | Henning 1901 (scan, OCR needed) |
+
+Why this order: the three canons have clean licenses, three complete language layers, a huge reference literature, and sources already identified. The Dead Sea Scrolls, Nag Hammadi, the Apocrypha and the rest are denser, more fragmentary and harder to source, and will be built on a pipeline already proven in Phase 1. See [ROADMAP.md](ROADMAP.md) for the milestones and checklists.
 
 ## Planned web app
 
@@ -81,9 +102,9 @@ Every view shows its data source, license, and uncertainty. See [docs/architectu
 
 ## Sources
 
-Thirteen candidate sources are recorded in [SOURCES.md](SOURCES.md) and [data/sources.toml](data/sources.toml), each with its license and a status (`ready`, `verify`, `manual` or `blocked`). Three license constraints shape the project: some data is **non-commercial only**, some is **ShareAlike**, and the Tanzil Arabic text must be kept **verbatim**. Third-party texts are never committed to this repository; the fetch script retrieves them from their original sources.
+Fifteen candidate sources are recorded in [SOURCES.md](SOURCES.md) and [data/sources.toml](data/sources.toml), each with its license, a status (`ready`, `verify`, `manual` or `blocked`) and the phase it belongs to. Three license constraints shape the project: some data is **non-commercial only**, some is **ShareAlike**, and the Tanzil Arabic text must be kept **verbatim**. Third-party texts are never committed to this repository; the fetch script retrieves them from their original sources.
 
-Known gaps are stated openly: there is no clean open edition of the Gospel of Judas yet, only part of Nag Hammadi exists in an open Coptic corpus, and the Septuagint and several translations still need verification.
+Known gaps are stated openly. For Phase 1: an English Qur'an translation with a clear license is still to be chosen, and the German Qur'an exists only as a scan that needs OCR. For Phase 2: there is no clean open edition of the Gospel of Judas yet, only part of Nag Hammadi exists in an open Coptic corpus, and the Dead Sea Scrolls have no free English translation.
 
 ## Repository layout
 
@@ -103,6 +124,7 @@ Python 3.11+, standard library only for now.
 
 ```bash
 python3 scripts/fetch_sources.py                            # dry run: prints the plan, downloads nothing
+python3 scripts/fetch_sources.py --phase 1                  # dry run for Phase 1 sources only
 python3 scripts/fetch_sources.py --execute hebrew-morphhb   # fetch one source
 python3 -m unittest discover -s tests                       # check the manifest
 ```

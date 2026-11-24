@@ -6,7 +6,8 @@ from pathlib import Path
 MANIFEST = Path(__file__).resolve().parent.parent / "data" / "sources.toml"
 STATUSES = {"ready", "verify", "manual", "blocked"}
 KINDS = {"git", "file", "manual"}
-REQUIRED = {"id", "name", "language", "kind", "url", "format", "license", "license_url", "attribution", "status", "notes"}
+REQUIRED = {"id", "name", "language", "kind", "url", "format", "license", "license_url", "attribution", "status", "phase", "notes"}
+PHASES = {1, 2}
 
 
 class ManifestTest(unittest.TestCase):
@@ -20,6 +21,7 @@ class ManifestTest(unittest.TestCase):
             self.assertFalse(REQUIRED - s.keys(), f"{s.get('id')} missing {REQUIRED - s.keys()}")
             self.assertIn(s["status"], STATUSES, s["id"])
             self.assertIn(s["kind"], KINDS, s["id"])
+            self.assertIn(s["phase"], PHASES, s["id"])
 
     def test_ids_unique(self):
         ids = [s["id"] for s in self.sources]
