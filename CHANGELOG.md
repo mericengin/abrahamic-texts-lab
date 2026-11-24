@@ -22,6 +22,8 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - Verse mapping tables (`scripts/alignment.py`): Hebrew to English to German, Greek to English and German, and Qur'an standard numbering to the 1930 Pickthall numbering.
 - Pickthall 1930 rebuilt from the OCR of four scans (`scripts/pickthall_reconcile.py`, `scripts/pickthall_build.py`); verification-only source `english-quran-pickthall-xcheck` (three more scans, text files only).
 
+- Second Henning OCR run (`deu_latf` + `Fraktur` models) and a repair step using Luther 1912 vocabulary; `scripts/ocr_pdf.py --tag` and `scripts/ocr_to_markdown.py <id> <tag>` keep runs side by side. Measured on two page images: 1.5% word errors (first run 7.6% as read).
+
 ### Found
 - **The Project Gutenberg #16955 "Pickthall" is not the 1930 text** (593 verses differ where three or more scans agree), so it is no longer used.
 - Henning's archive OCR and PDF text layer are unusable (Fraktur misread). A Fraktur OCR is needed.

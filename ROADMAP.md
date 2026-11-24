@@ -93,6 +93,7 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [x] Owner confirms the German Qur'an layer: Henning 1901 (confirmed 2026-11-24)
 - [x] Obtain the Henning scan (downloaded 2026-11-24)
 - [x] Fraktur OCR of the Henning scan (the archive's OCR was unusable): all 622 pages with Tesseract, 280 common German words per 1000 raw (329 normalized), raw and normalized Markdown layers with a logged repair list; the front matter shows Henning's own text with a 1901 foreword
+- [x] Second OCR run with `deu_latf+Fraktur` and a Luther-vocabulary repair step: about 1.5% word errors on two hand-checked pages (first run about 7.6% as read)
 - [ ] Proofread the Henning OCR against the page images (still machine output with residual slips), and map its verse numbering. Not the Projekt Gutenberg-DE copy (private use only).
 - [ ] Decide the stable identifier scheme (ADR 0001)
 - [x] Text parsers: OSIS (Hebrew), MorphGNT, SBLGNT, USFX (WEB, Luther), Tanzil (`scripts/canon.py`, tested, read-back checked)
