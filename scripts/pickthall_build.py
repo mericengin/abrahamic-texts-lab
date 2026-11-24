@@ -73,6 +73,37 @@ def trim_tail(text: str, ref: str) -> str:
     return text
 
 
+def token_vote(reads: list[str]):
+    """Word-by-word majority over the readings of one verse. Returns the voted text, or None if the result matches (or nearly matches) fewer than two readings."""
+    import difflib
+    tk = lambda w: re.sub(r"[^a-z]", "", w.lower())
+    pivot = max(reads, key=lambda a: sum(difflib.SequenceMatcher(None, pr.key(a), pr.key(b)).ratio() for b in reads))
+    pt = pivot.split()
+    votes = [Counter() for _ in pt]
+    for t in reads:
+        if t is pivot:
+            for i, w in enumerate(pt):
+                votes[i][tk(w)] += 1
+            continue
+        other = t.split()
+        sm = difflib.SequenceMatcher(None, [tk(w) for w in pt], [tk(w) for w in other], autojunk=False)
+        for tag, i1, i2, j1, j2 in sm.get_opcodes():
+            if tag == "equal":
+                for k in range(i2 - i1):
+                    votes[i1 + k][tk(pt[i1 + k])] += 1
+            elif tag == "replace" and i2 - i1 == j2 - j1:
+                for k in range(i2 - i1):
+                    votes[i1 + k][tk(other[j1 + k])] += 1
+    out = []
+    for i, w in enumerate(pt):
+        win = votes[i].most_common(1)[0][0]
+        out.append(w if tk(w) == win else next((x for t in reads for x in t.split() if tk(x) == win), w))
+    voted = " ".join(out)
+    kv = pr.key(voted)
+    close = sum(1 for t in reads if difflib.SequenceMatcher(None, pr.key(t), kv).ratio() > 0.985)
+    return voted if close >= 2 else None
+
+
 def sura_starts(letters: str, idx: list[int], guten, gkeys, offs):
     """Raw-text position near each sura's first verse, from the anchor chain."""
     gfull = "".join(gkeys[r] for r in sorted(guten))
@@ -177,8 +208,12 @@ def main() -> int:
             verdict = "single"
         else:
             verdict = "missing"
-        verdicts[verdict] += 1
         text = reads[winners[0]] if winners else ""
+        if verdict == "split":
+            voted = token_vote([t for t in reads.values() if t])
+            if voted:
+                verdict, text = "voted", voted      # settled by a word-by-word majority; still unverified against the page image
+        verdicts[verdict] += 1
         rows.append({"sura": r[0], "verse": r[1], "verdict": verdict, "scans_with_verse": len(keys), "identical": c, "text": text,
                      "gutenberg_identical": pr.key(guten[r]) == top, "readings": {n: t for n, t in reads.items()} if verdict in ("split", "single", "pair") else {}})
     same = sum(1 for x in rows if x["gutenberg_identical"])

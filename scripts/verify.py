@@ -321,7 +321,7 @@ def verify_pickthall() -> None:
           identical=build["identical_to_gutenberg_pickthall"], differs=build["differs_from_gutenberg"])
     check("pickthall", "1930 text rebuilt from four scans of the book: verses decided by agreement between scans", None,
           f"{v.get('agreed', 0):,} verses identical in three or more scans, {v.get('pair', 0):,} identical in two; decided {decided:,} of {n:,} ({100 * decided / n:.1f}%); "
-          f"unresolved: split {v.get('split', 0)}, single scan {v.get('single', 0)}, missing {v.get('missing', 0)}", verdicts=v)
+          f"settled only by a word-by-word majority: {v.get('voted', 0)}; unresolved: split {v.get('split', 0)}, single scan {v.get('single', 0)}, missing {v.get('missing', 0)}", verdicts=v)
     check("pickthall", "review queue: verses that need a person to check them against the page image", None,
           f"{build['review_queue']} verses ({100 * build['review_queue'] / n:.1f}%): {build['review_reasons']}", reasons=build["review_reasons"])
     check("pickthall", "caveat: the four scans may share some OCR errors", None,
