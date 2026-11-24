@@ -32,7 +32,7 @@ STATUS = {
     "luther": ("Verified", "Same checks as the WEB, all passed; verse counts per chapter agree with the WEB except where the traditions differ."),
     "quran-arabic": ("Verified", "Text kept verbatim; XML and text files agree; verse counts per sura agree with an independent source; the Tanzil notice is present everywhere."),
     "pickthall": ("Mostly verified, not complete", "The 1930 text rebuilt from four scans is decided by agreement or alignment for about 98% of verses; 91 hard or vote-only verses were read against the page images (this found and fixed real errors: lost words, a footnote mixed into 73:20, a verse mixed into 9:110, stray footnote marks, footnote and page-header text mixed into verses); 88 verses still rest only on a word-by-word vote, and the fresh page OCR confirms all 88. Leftover footnote marks (OCR read them as ^) were removed from 23 verses; those removals rest on the 5 page images viewed, not on each verse. Nothing is queued, but only the viewed verses are proven against the page image. The Gutenberg Pickthall text is NOT the 1930 text and is not used."),
-    "henning": ("Not trustworthy yet", "The scan is complete and continuous, but the OCR still has a word error rate of several percent and nothing has been proofread against the page images."),
+    "henning": ("Not trustworthy yet", "The scan is complete and continuous. The best layer (OCR plus an automatic repair pass) has about 1% word errors on three hand-transcribed pages (about 1.8% before the repair pass); the repair rules were tuned on those pages, so treat 1 to 2% as the estimate. No page has been proofread by a person across the whole book."),
     "mapping": ("Built; some links need an expert", "Hebrew, English and German are aligned except a few listed verses; Greek verses that exist in only one layer, and Henning's numbering, are not linked yet."),
 }
 
@@ -67,7 +67,7 @@ def main() -> int:
         out.append("")
     out += ["## Open items", "",
             "- Read the remaining vote-only verses (`verdict: voted` in `data/processed/pickthall/pickthall-1930-built.json`, local) against the page images, and a larger random sample of the agreed verses, to measure how often the scans share an OCR slip.",
-            "- Proofread the Henning OCR against the page images, then read its own verse numbering and map it to the standard numbering.",
+            "- Proofread the Henning OCR against the page images (so far only 3 pages were hand-transcribed and 2 more checked by eye), then read its own verse numbering and map it to the standard numbering.",
             "- Confirm by an expert the links for Greek verses that exist in only one layer (critical-text omissions and divisions that differ).",
             "- The four Pickthall scans may share OCR slips; a check of a random sample against the page images would measure that.", ""]
     (ROOT / "docs" / "data-verification.md").write_text("\n".join(out) + "\n", encoding="utf-8")

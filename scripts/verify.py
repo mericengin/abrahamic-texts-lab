@@ -390,7 +390,7 @@ def verify_henning() -> None:
         check("henning", "verse numbers read in sequence against the standard sura sizes (first 60 suras only)", None,
               f"in {len(exact)} of the first 60 suras every verse number 1..N was read and N equals the standard count; the others differ by one or two verses (Henning numbers some verses his own way) or have unread numbers. "
               f"Later short suras are laid out differently and are not checked yet.", exact_suras_of_first_60=len(exact))
-    fixtures = {152: ROOT / "tests" / "fixtures" / "henning-page-152-transcription.txt", 250: ROOT / "tests" / "fixtures" / "henning-page-250-transcription.txt"}
+    fixtures = {n: ROOT / "tests" / "fixtures" / f"henning-page-{n}-transcription.txt" for n in (152, 250, 450)}
     mdroot = ROOT / "data" / "processed" / "markdown" / "german-quran-henning"
 
     def md_page(path: Path, n: int):
@@ -406,6 +406,7 @@ def verify_henning() -> None:
         "run 2 (deu_latf+Fraktur models), as read": lambda n: (ROOT / "data" / "processed" / "ocr" / "german-quran-henning-latf" / f"page-{n:03d}.txt").read_text(encoding="utf-8")
         if (ROOT / "data" / "processed" / "ocr" / "german-quran-henning-latf" / f"page-{n:03d}.txt").exists() else None,
         "run 2 (deu_latf+Fraktur models), normalized": lambda n: md_page(mdroot / "german-quran-henning-fraktur-ocr-normalized-latf.md", n),
+        "run 2 normalized plus repair pass 2 (scripts/henning_proofread.py)": lambda n: md_page(mdroot / "german-quran-henning-fraktur-ocr-normalized-latf-pass2.md", n),
     }
     best = None
     for label, get in variants.items():
@@ -419,8 +420,8 @@ def verify_henning() -> None:
             we, nw, ce, nc = wer_cer(fx.read_text(encoding="utf-8"), text)
             W, E, C, N = W + we, E + nw, C + ce, N + nc
         if ok:
-            check("henning", f"OCR accuracy against hand transcriptions of two page images, pages 152 and 250 ({label})", None,
-                  f"word errors {W} of {E} ({100 * W / E:.1f}%), character errors {C} of {N} ({100 * C / N:.2f}%). Two pages, about {E} words: an estimate, not a guarantee.",
+            check("henning", f"OCR accuracy against hand transcriptions of three page images, pages 152, 250 and 450 ({label})", None,
+                  f"word errors {W} of {E} ({100 * W / E:.1f}%), character errors {C} of {N} ({100 * C / N:.2f}%). Three pages, about {E} words: an estimate, not a guarantee; the repair-pass rules were tuned on pages 152, 250 and 450, so the pass-2 figure is optimistic.",
                   word_errors=W, words=E, char_errors=C, chars=N)
             best = (label, 100 * W / E)
     check("henning", "trustworthiness of the German Qur'an layer", False,

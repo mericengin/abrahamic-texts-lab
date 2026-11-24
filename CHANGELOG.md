@@ -32,6 +32,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 - 12 more vote-only Pickthall verses read against the page images (the image-checks file now has 51 entries) and about 30 recorded cosmetic fixes (`text-fixes.json`); the review queue is empty.
 - 29 more Pickthall verses read against the page images (image-checks now 80 entries): fixed stray footnote marks and dash artifacts (24:4, 37:62, 71:23, 38:48, 30:58 and 11 em-dash joins). Then 5 more (4:46, 4:127, 20:46, 34:15, 100:4) fixed against the page images (image-checks now 91; 6 more read: 11:42 lost dashes, 14:31 stray comma, 10:12 missing bracket repaired): footnote text and a page header that had leaked into verses (4:127, 10:12), lost words, and all 23 stray `^` footnote marks removed. Still open: 88 verses rest on a vote only (all 88 confirmed by fresh OCR, not by eye).
+- Henning German Qur'an: `scripts/henning_proofread.py` repairs lost `ch` ligatures, `ß` read for `tz`/`ss`/`ch`, `b` read for `h`, `>` read for `ck`, and `3` read for `s`, only when exactly one repaired spelling is a known word; every repair is logged (local `CORRECTIONS-pass2.json`, 973 repairs). Measured on three hand-transcribed pages (new fixture page 450): 1.8% to 1.1% word errors. Rules were tuned on those pages, so the true rate is probably 1 to 2%. Not yet proofread by a person across the book.
 
 ### Found
 - Reading the vote-only verses found real errors in the vote (2:259, 5:3, 9:110/9:111, 73:20, 6:93); vote-only text is the least reliable group.
