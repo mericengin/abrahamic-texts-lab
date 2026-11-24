@@ -31,7 +31,7 @@ STATUS = {
     "web": ("Verified", "Independent extraction equals the parsed verses; no word of ours is missing from the official PDF."),
     "luther": ("Verified", "Same checks as the WEB, all passed; verse counts per chapter agree with the WEB except where the traditions differ."),
     "quran-arabic": ("Verified", "Text kept verbatim; XML and text files agree; verse counts per sura agree with an independent source; the Tanzil notice is present everywhere."),
-    "pickthall": ("Mostly verified, not complete", "The 1930 text rebuilt from four scans is decided by agreement or alignment for about 97% of verses, 38 hard verses were read against the page images, and 119 rest only on a word-by-word vote. Nothing is queued, but only the 38 are proven against the page image. The Gutenberg Pickthall text is NOT the 1930 text and is not used."),
+    "pickthall": ("Mostly verified, not complete", "The 1930 text rebuilt from four scans is decided by agreement or alignment for about 97% of verses; 50 hard verses were read against the page images (this found and fixed several real errors: lost words, a footnote mixed into 73:20, a verse mixed into 9:110); 122 verses rest only on a word-by-word vote, of which the fresh page OCR confirms about 72% and I read the rest by eye. Nothing is queued, but only the 50 are proven against the page image. The Gutenberg Pickthall text is NOT the 1930 text and is not used."),
     "henning": ("Not trustworthy yet", "The scan is complete and continuous, but the OCR still has a word error rate of several percent and nothing has been proofread against the page images."),
     "mapping": ("Built; some links need an expert", "Hebrew, English and German are aligned except a few listed verses; Greek verses that exist in only one layer, and Henning's numbering, are not linked yet."),
 }
@@ -66,7 +66,7 @@ def main() -> int:
                         out.append(f"  - In the other layer but not in the SBLGNT: {', '.join(c['only_in_other'])}")
         out.append("")
     out += ["## Open items", "",
-            "- Check the 119 verses settled only by a word-by-word vote against the page images (`verdict: voted` in `data/processed/pickthall/pickthall-1930-built.json`, local), and a random sample of the agreed verses, to measure how often the scans share an OCR slip.",
+            "- Read the remaining vote-only verses (`verdict: voted` in `data/processed/pickthall/pickthall-1930-built.json`, local) against the page images, and a larger random sample of the agreed verses, to measure how often the scans share an OCR slip.",
             "- Proofread the Henning OCR against the page images, then read its own verse numbering and map it to the standard numbering.",
             "- Confirm by an expert the links for Greek verses that exist in only one layer (critical-text omissions and divisions that differ).",
             "- The four Pickthall scans may share OCR slips; a check of a random sample against the page images would measure that.", ""]

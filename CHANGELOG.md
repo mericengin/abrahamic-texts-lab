@@ -30,7 +30,10 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 - Completeness pass in `pickthall_build.py`: verses that run across a page break had lost their continuation (a bug in my first rebuild that also affected the Gutenberg text); the build now finds the verse in the fresh page OCR and appends the missing words when a page header marks the break or the sentence is plainly unfinished; narrower footnote removal; recorded text fixes (`text-fixes.json`).
 
+- 12 more vote-only Pickthall verses read against the page images (the image-checks file now has 51 entries) and about 30 recorded cosmetic fixes (`text-fixes.json`); the review queue is empty.
+
 ### Found
+- Reading the vote-only verses found real errors in the vote (2:259, 5:3, 9:110/9:111, 73:20, 6:93); vote-only text is the least reliable group.
 - Gutenberg's Pickthall text is cut short in places (8:72, 2:85) and has words the 1930 book lacks or lacks words it has (20:109); the 1930 print itself has a misprint at 5:89.
 - **The Project Gutenberg #16955 "Pickthall" is not the 1930 text** (593 verses differ where three or more scans agree), so it is no longer used.
 - Henning's archive OCR and PDF text layer are unusable (Fraktur misread). A Fraktur OCR is needed.
