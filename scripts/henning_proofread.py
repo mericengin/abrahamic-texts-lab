@@ -29,7 +29,7 @@ DENY = {"ausgeben", "eingeben", "aufgeben", "abgeben", "angeben", "übergeben", 
 WORD = re.compile(r"[A-Za-zÄÖÜäöüß3>]+")
 
 
-SUBS = [("an", "au"), ("en", "eu"), ("fi", "st"), ("scl", "schl"), ("scw", "schw"), ("scr", "schr"), ("scm", "schm"), ("scn", "schn"), ("bm", "hm"), ("äb", "äh")]
+SUBS = [("an", "au"), ("en", "eu"), ("fi", "st"), ("scl", "schl"), ("scw", "schw"), ("scr", "schr"), ("scm", "schm"), ("scn", "schn"), ("bm", "hm"), ("äb", "äh"), ("ce", "cke"), ("ud", "uck"), ("üd", "ück"), ("cs", "cks")]
 
 
 def edits(w: str):
@@ -119,7 +119,7 @@ def main() -> int:
             fixed = "is" + lw[2:]
             log[(lw, fixed)] += 1
             return fixed.capitalize() if w[:1].isupper() else fixed
-        good = {c for c in candidates(lw) if known(c) and own[lw] * 3 < max(lex.get(c, 0), own.get(c, 0))}
+        good = {c for c in candidates(lw) if known(c) and (("ß" in lw and lex.get(lw, 0) == 0) or own[lw] * 3 < max(lex.get(c, 0), own.get(c, 0)))}
         if len(good) != 1:
             return w
         fixed = good.pop()
