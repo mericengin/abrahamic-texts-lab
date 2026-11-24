@@ -10,6 +10,7 @@ id = "hebrew-morphhb"
 name = "Open Scriptures Hebrew Bible (WLC + lemma/morphology)"
 language = "Biblical Hebrew"
 kind = "git"
+paths = ["wlc"]
 url = "https://github.com/openscriptures/morphhb"
 format = "OSIS XML (wlc/), JSON conversion scripts"
 license = "CC-BY-4.0"
@@ -17,7 +18,7 @@ license_url = "https://github.com/openscriptures/morphhb/blob/master/LICENSE.md"
 attribution = "Open Scriptures Hebrew Bible Project, https://github.com/openscriptures/morphhb"
 status = "ready"
 phase = 1
-notes = "Annotations CC BY 4.0; underlying WLC text public domain."
+notes = "Annotations CC BY 4.0; underlying WLC text public domain. Sparse checkout of wlc/ (39 books of OSIS XML, about 28.6 MB); root files (README, LICENSE.md) come with it. Word tags carry lemma, morph and id; the plain Hebrew text is produced by removing the / morpheme markers."
 
 [[source]]
 id = "greek-morphgnt"
@@ -31,7 +32,7 @@ license_url = "https://creativecommons.org/licenses/by-sa/3.0/"
 attribution = "Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition, v6.12, DOI 10.5281/zenodo.376200"
 status = "ready"
 phase = 1
-notes = "ShareAlike applies to the morphology. README says the SBLGNT text itself falls under the SBLGNT EULA; see greek-sblgnt-text."
+notes = "MorphGNT 6.12 lacks John 7:53 to 8:11 (12 verses; the SBLGNT added that passage in v1.2, 2023), so it has 7,927 verses against the SBLGNT's 7,939. ShareAlike applies to the morphology. README says the SBLGNT text itself falls under the SBLGNT EULA; see greek-sblgnt-text."
 
 [[source]]
 id = "greek-sblgnt-text"
@@ -40,26 +41,31 @@ language = "Koine Greek"
 kind = "git"
 url = "https://github.com/Faithlife/SBLGNT"
 format = "source files in data/"
-license = "CC-BY-4.0 (per README; conflicts with MorphGNT's EULA pointer)"
-license_url = "https://github.com/Faithlife/SBLGNT"
+license = "CC-BY-4.0"
+license_url = "https://github.com/Faithlife/SBLGNT/blob/master/LICENSE"
 attribution = "Copyright 2010 Society of Biblical Literature and Logos Bible Software"
-status = "verify"
+status = "ready"
 phase = 1
-notes = "sblgnt.com/license was unreachable on 2026-11-24, so the EULA could not be read. Recheck before publishing the text."
+notes = "Conflict resolved 2026-11-24: the copyright holders' own repository (Society of Biblical Literature and Logos) ships the full CC BY 4.0 legal code in LICENSE and states in its README that the SBLGNT is licensed under CC BY 4.0 (v1.1, 2022-12-19: Update public version and license on github). MorphGNT's README, which points to an older EULA, predates that change. sblgnt.com/license was still unreachable, so the EULA text itself was not read. Plain text per book in data/sblgnt/text/ and XML in data/sblgnt/xml/."
 
 [[source]]
 id = "quran-tanzil-arabic"
 name = "Tanzil Quran text (Arabic)"
 language = "Classical Arabic"
-kind = "manual"
+kind = "file"
+files = [
+  { url = "https://tanzil.net/pub/download/index.php?quranType=uthmani&outType=xml&marks=true&sajdah=true&rub=true&alef=true&tatweel=true&agree=true", filename = "quran-uthmani.xml" },
+  { url = "https://tanzil.net/pub/download/index.php?quranType=uthmani&outType=txt-2&marks=true&sajdah=true&rub=true&alef=true&tatweel=true&agree=true", filename = "quran-uthmani.txt" },
+  { url = "https://tanzil.net/pub/download/index.php?quranType=simple-clean&outType=txt-2&marks=true&agree=true", filename = "quran-simple-clean.txt" },
+]
 url = "https://tanzil.net/download/"
 format = "txt, txt with aya numbers, XML, SQL"
 license = "Tanzil terms (verbatim copies only)"
 license_url = "https://tanzil.net/docs/text_license"
 attribution = "Tanzil Quran Text, Tanzil Project, https://tanzil.net"
-status = "manual"
+status = "ready"
 phase = 1
-notes = "Download requires ticking the terms box in a browser. Text must not be modified; the notice must travel with every copy or derived file. Keep annotations in separate layers."
+notes = "Tanzil Quran text v1.1. The download form requires accepting the Terms of Use (agree=true). The owner told the assistant on 2026-11-24 to get the Arabic Qur'an, and the terms (verbatim copies only, credit Tanzil, link to tanzil.net, keep the notice in derived files) had been explained to the owner. Three files: Uthmani XML, Uthmani text with aya numbers, and Simple (Clean) text with aya numbers (Tanzil's own text type, handy for searching). Do not modify the text; keep annotations in separate layers."
 
 [[source]]
 id = "dss-etcbc"
@@ -109,8 +115,11 @@ id = "english-web-deutero"
 name = "World English Bible, Classic, with Apocrypha/Deuterocanon"
 language = "English"
 kind = "file"
+files = [
+  { url = "https://ebible.org/Scriptures/eng-web_usfx.zip", filename = "eng-web_usfx.zip" },
+  { url = "https://ebible.org/pdf/eng-web/eng-web_all.pdf", filename = "eng-web_all.pdf" },
+]
 url = "https://eBible.org/Scriptures/eng-web_usfx.zip"
-filename = "eng-web_usfx.zip"
 format = "USFX XML"
 license = "Public Domain"
 license_url = "https://ebible.org/find/details.php?id=eng-web"
@@ -124,15 +133,18 @@ id = "german-luther-1912"
 name = "Luther Bible 1912"
 language = "German"
 kind = "file"
+files = [
+  { url = "https://ebible.org/Scriptures/deu1912_usfx.zip", filename = "deu1912_usfx.zip" },
+  { url = "https://ebible.org/pdf/deu1912/deu1912_all.pdf", filename = "deu1912_all.pdf" },
+]
 url = "https://eBible.org/Scriptures/deu1912_usfx.zip"
-filename = "deu1912_usfx.zip"
 format = "USFX XML"
-license = "Public Domain (per search results; page not opened)"
+license = "Public Domain (eBible.org details page, read 2026-11-24)"
 license_url = "https://ebible.org/bible/details.php?id=deu1912"
 attribution = "Luther Bible 1912, eBible.org"
-status = "verify"
+status = "ready"
 phase = 1
-notes = "URL follows eBible's naming pattern but was not confirmed. Check the details page first."
+notes = "Details page read directly on 2026-11-24: Lutherbibel 1912, Public Domain, translation by Martin Luther. Official eBible PDF and USFX XML are both fetched. Covers the Hebrew Bible and New Testament (the Apocrypha in Luther 1912 is Phase 2)."
 
 [[source]]
 id = "enoch-charles"

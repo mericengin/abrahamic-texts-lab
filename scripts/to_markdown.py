@@ -24,6 +24,9 @@ import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import canon  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "processed" / "markdown"
@@ -221,6 +224,9 @@ def convert_pdf(path: Path) -> tuple[str, str, dict]:
     }
 
 
+CANON_BUILDERS = canon.builders(RAW)
+
+
 def main() -> int:
     with MANIFEST.open("rb") as fh:
         sources = {s["id"]: s for s in tomllib.load(fh)["source"]}
@@ -240,6 +246,9 @@ def main() -> int:
         for fname, rec in recs.items():
             path = rawdir / fname
             quality = None
+            if fname.endswith(".zip"):
+                print(f"   {fname}: structured parser (see versions below)")
+                continue
             if fname.endswith(".pdf"):
                 body, how, checks = convert_pdf(path)
                 if checks["has_text_layer"]:
@@ -268,6 +277,26 @@ def main() -> int:
             report["files"][fname] = {"markdown": f"{fname}.md", "source_bytes": rec["bytes"], "md_bytes": len(md.encode()),
                                       "ocr_quality": quality, **checks}
             print(f"   {fname}.md  {report['files'][fname]['md_bytes']:,} bytes  quality={quality}  checks={checks}")
+        if sid in CANON_BUILDERS:
+            front = {"source_id": sid, "license": src["license"], "attribution": src["attribution"],
+                     "retrieved_utc": prov["retrieved_utc"], "commit": prov.get("commit"),
+                     "sha256": {r["file"]: r["sha256"] for r in prov.get("files", [])} or None,
+                     "converted_by": f"scripts/to_markdown.py v{VERSION}",
+                     "note": "Third-party text. Kept local and git-ignored; do not redistribute beyond its license."}
+            report["versions"] = {}
+            for key, parse in CANON_BUILDERS[sid]:
+                ver = parse()
+                vdir = outdir / key
+                names = canon.write_md(ver, vdir, front)
+                chk = canon.roundtrip(ver, vdir)
+                exp = canon.EXPECTED_VERSIONS_FOR_STATS if False else None
+                total = ver.stats.get("verses", ver.stats.get("ayas"))
+                expected = canon.EXPECTED_VERSES.get(key)
+                empty = sum(1 for b in ver.books for r in b.rows if not r[2])
+                report["versions"][key] = {"files": len(names) + 1, "stats": ver.stats, "expected_verses": expected,
+                                           "matches_expected": (total == expected) if expected else None,
+                                           "empty_verses": empty, "markdown_roundtrip": chk}
+                print(f"   {key}/: {len(names)} files, stats={ver.stats}, expected={expected}, empty={empty}, roundtrip_ok={chk['ok']}")
         (outdir / "CONVERSION.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return 0
 

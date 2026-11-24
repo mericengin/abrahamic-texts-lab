@@ -23,7 +23,8 @@ Abrahamic Texts Lab is a free, non-profit research workspace and public web app 
 9. **No secrets.** No API keys, tokens or account IDs in code, configs, notebooks, tests or fixtures. Use environment variables and keep `.env.example` current.
 10. **Never incur a cost without asking.** Free resources only: no paid plans, upgrades, overages or paid API use unless the owner approves in writing. Prefer local or free models, cap any usage, and cache results.
 11. **No personal data.** Do not put the owner's personal details into requests to outside services, headers, URLs or fixtures.
-12. **LLM evaluations need memorization controls** (perturbed verses, obscure or held-out texts, closed-book baselines) before any claim about reasoning (R7 to R9).
+12. **Tanzil text stays verbatim and keeps its notice.** Never edit the Arabic text. Every Markdown, PDF or other file made from it carries the copyright notice (the converters do this; keep it that way).
+13. **LLM evaluations need memorization controls** (perturbed verses, obscure or held-out texts, closed-book baselines) before any claim about reasoning (R7 to R9).
 
 ## Architecture in one paragraph
 
@@ -44,6 +45,7 @@ Layers: sources (raw, untouched) -> parsers -> a unified corpus with stable iden
 - Python 3.11+. The fetch script and tests use the standard library only. Add dependencies only with a reason, and record significant choices as ADRs in `docs/adr/` (create the folder when the first ADR is written).
 - Tests: `python3 -m unittest discover -s tests`
 - Dry-run fetch plan: `python3 scripts/fetch_sources.py` (add `--phase 1` or `--phase 2` to filter)
+- PDFs where the source has none (Hebrew, Greek, Arabic): `python3 scripts/make_pdfs.py` (needs Google Chrome). OCR of scanned PDFs: `python3 scripts/ocr_pdf.py <id> <pdf>` then `python3 scripts/ocr_to_markdown.py <id>` (needs `brew install tesseract poppler` and a model in `.tools/tessdata`). Inventory: `python3 scripts/data_report.py`.
 - Markdown copies of downloaded sources: `.venv/bin/python scripts/to_markdown.py` (needs `requirements.txt`). Every download gets a Markdown version next to the original; never trust an OCR output without its quality flag.
 - Fetch one source (owner approval required first): `python3 scripts/fetch_sources.py --execute <id>`
 

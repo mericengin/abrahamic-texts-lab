@@ -113,7 +113,7 @@ assets/                  logo and banner
 data/sources.toml        machine-readable source manifest
 data/raw/                fetched third-party texts (git-ignored)
 data/processed/markdown/ Markdown copies with provenance and quality checks (git-ignored)
-docs/                    scope, research questions, architecture, ethics
+docs/                    scope, research questions, architecture, ethics, data inventory
 scripts/fetch_sources.py dry-run by default; --execute downloads
 tests/                   manifest checks
 ROADMAP.md  CHANGELOG.md  CLAUDE.md  CONTRIBUTING.md  SOURCES.md
@@ -131,7 +131,9 @@ python3 -m unittest discover -s tests                       # check the manifest
 
 # optional: Markdown copies of everything downloaded (local, git-ignored)
 python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python scripts/to_markdown.py
+.venv/bin/python scripts/to_markdown.py            # Markdown for every downloaded source
+python3 scripts/make_pdfs.py                       # reading PDFs for Hebrew, Greek, Arabic (needs Google Chrome)
+python3 scripts/data_report.py                     # refresh docs/data-inventory.md
 ```
 
 Only sources marked `ready` are fetched.

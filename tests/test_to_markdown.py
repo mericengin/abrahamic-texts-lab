@@ -53,3 +53,26 @@ class ConversionTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class OcrHelpersTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import sys
+        s = importlib.util.spec_from_file_location("ocr_to_markdown", Path(__file__).resolve().parent.parent / "scripts" / "ocr_to_markdown.py")
+        cls.om = importlib.util.module_from_spec(s)
+        sys.modules["ocr_to_markdown"] = cls.om
+        s.loader.exec_module(cls.om)
+
+    def test_candidates_cover_fraktur_slips(self):
+        c = self.om.candidates
+        self.assertIn("nicht", c("niht"))    # ch read as h
+        self.assertIn("nicht", c("nict"))    # ch read as c
+        self.assertIn("nicht", c("uicht"))   # u/n swap
+        self.assertIn("sich", c("sih"))      # ih -> ich
+
+    def test_common_score_separates_german_from_junk(self):
+        good = "Und die da glauben an das was auf dich herabgesandt ward und nicht ist sie von den Menschen " * 5
+        junk = "3)er Koran übertragen unö ©erfel^en pon ZHaf fjenning Dcriag Hcciam Cctpjig " * 5
+        self.assertGreater(self.om.common_score(good), 150)
+        self.assertLess(self.om.common_score(junk), 80)

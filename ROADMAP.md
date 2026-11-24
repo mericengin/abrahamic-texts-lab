@@ -79,10 +79,12 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 
 ## P1.1 Corpus foundation (R1)
 
-- [ ] Owner approves the first download batch (filenames and sizes listed first)
-- [ ] Fetch the Phase 1 `ready` sources; check provenance records
+- [x] Owner approves the downloads (the Qur'an scans on request, then a general go-ahead on 2026-11-24 for all Phase 1 canon files)
+- [x] Fetch the Hebrew, Greek, English, German and Arabic sources and the Qur'an scans; check provenance records (sizes, file types, counts)
 - [x] Markdown conversion for every downloaded source (`scripts/to_markdown.py`): local, lossless for text, with OCR-quality flags and checks
-- [ ] Resolve the Phase 1 `verify` items: SBLGNT license conflict, Luther 1912 URL, Septuagint edition (confirm Swete or drop)
+- [x] Resolve the SBLGNT license conflict (CC BY 4.0 in the holders' own repository) and the Luther 1912 URL and license
+- [ ] Resolve the Septuagint edition (confirm Swete or drop the optional layer)
+- [x] PDF and Markdown version of every Phase 1 text ([docs/data-guide.md](docs/data-guide.md)); generated PDFs for Hebrew, Greek and Arabic, official PDFs and scans for the rest
 - [x] Owner confirms the English Qur'an layer: Pickthall 1930 (confirmed 2026-11-24)
 - [x] Obtain the Pickthall scan and its OCR text (downloaded 2026-11-24; the PDF is image-only, the archive OCR is good)
 - [ ] Proofread the Pickthall 1930 text against the scan and map its verse numbering (the scan numbers verses differently from the standard count)
@@ -91,7 +93,8 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [x] Obtain the Henning scan (downloaded 2026-11-24)
 - [ ] Fraktur OCR of the Henning scan (the archive's OCR is unusable), then confirm the edition and date on its title page, measure quality, proofread, and map verse numbering. Not the Projekt Gutenberg-DE copy (private use only).
 - [ ] Decide the stable identifier scheme (ADR 0001)
-- [ ] Parsers: OSIS (Hebrew), MorphGNT, USFX (WEB, Luther), Tanzil, Septuagint CTS/EpiDoc if kept
+- [x] Text parsers: OSIS (Hebrew), MorphGNT, SBLGNT, USFX (WEB, Luther), Tanzil (`scripts/canon.py`, tested, read-back checked)
+- [ ] Septuagint CTS/EpiDoc parser, if the layer is kept
 - [ ] Unified schema and database with per-row provenance and license
 - [ ] Versification mappings (Hebrew and English Bible numbering, Qur'an numbering) documented and tested
 - [ ] Verse alignment across original, English and German for all three canons

@@ -30,7 +30,8 @@ Phase 1 (the three canons) avoids the non-commercial restriction altogether: the
 
 ### Known conflicts and gaps
 
-- **SBLGNT text:** the Faithlife repository says CC BY 4.0; the MorphGNT README says the text falls under the SBLGNT EULA, which could not be read. Resolve before publishing the text.
+- **SBLGNT text (resolved 2026-11-24):** the copyright holders' own repository (Society of Biblical Literature and Logos) ships the full CC BY 4.0 legal code and states the license in its README (v1.1, 2022). MorphGNT's older note pointing to an EULA predates that. The EULA page itself was still unreachable, so it was not read; CC BY 4.0 is used on the strength of the holders' own repository.
+- **Tanzil terms:** accepted on the owner's instruction on 2026-11-24 when the Arabic text was fetched (the download form requires it). The terms were explained beforehand: verbatim copies only, credit Tanzil, link to tanzil.net, keep the notice in every derived file.
 - **Gospel of Judas:** no open Coptic edition; the free English translation found names no translator and sits on a site with an "all rights reserved" footer. Options: ask for permission, transcribe from published images, or defer.
 - **Nag Hammadi English translations** (Robinson, Meyer) are copyrighted and will not be used. Our own translations from Coptic are an option.
 - **Tanzil translations:** each belongs to its translator and is non-commercial; the project does not bundle them. That includes Tanzil's Pickthall file.

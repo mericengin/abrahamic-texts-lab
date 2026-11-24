@@ -10,6 +10,8 @@ Verified 2026-11-24 from each source's own page, except where noted. The machine
 
 Third-party texts are not committed to this repository. `scripts/fetch_sources.py` fetches them from the original source.
 
+What is actually on disk, with file sizes, checksums and check results, is listed in [docs/data-inventory.md](docs/data-inventory.md), which a script generates from the provenance records.
+
 ## Status key
 
 `ready` = checked and safe to fetch. `verify` = a detail is unconfirmed. `manual` = needs a human step. `blocked` = no usable open source.
@@ -18,12 +20,12 @@ Third-party texts are not committed to this repository. `scripts/fetch_sources.p
 
 | ID | Text | Language | License | Status |
 |---|---|---|---|---|
-| hebrew-morphhb | [Open Scriptures Hebrew Bible](https://github.com/openscriptures/morphhb) | Biblical Hebrew | CC BY 4.0 (WLC text public domain) | ready |
-| greek-morphgnt | [MorphGNT SBLGNT](https://github.com/morphgnt/sblgnt) | Koine Greek | CC BY-SA 3.0 (morphology) | ready |
-| greek-sblgnt-text | [SBLGNT, Faithlife](https://github.com/Faithlife/SBLGNT) | Koine Greek | CC BY 4.0 per README; MorphGNT says EULA applies | verify |
-| quran-tanzil-arabic | [Tanzil Quran text](https://tanzil.net/docs/text_license) | Classical Arabic | verbatim copies only, attribution and link required | manual |
-| english-web-deutero | [WEB Classic with Deuterocanon](https://ebible.org/find/details.php?id=eng-web) | English (Hebrew Bible and New Testament; Deuterocanon is Phase 2) | Public domain | ready |
-| german-luther-1912 | [Luther 1912](https://ebible.org/bible/details.php?id=deu1912) | German (Hebrew Bible and New Testament) | Public domain (not yet opened) | verify |
+| hebrew-morphhb | [Open Scriptures Hebrew Bible](https://github.com/openscriptures/morphhb) | Biblical Hebrew | CC BY 4.0 (WLC text public domain) | ready, downloaded |
+| greek-morphgnt | [MorphGNT SBLGNT](https://github.com/morphgnt/sblgnt) | Koine Greek | CC BY-SA 3.0 (morphology) | ready, downloaded |
+| greek-sblgnt-text | [SBLGNT, Faithlife](https://github.com/Faithlife/SBLGNT) | Koine Greek | CC BY 4.0 (full legal code in the holders' own repository; conflict with MorphGNT's older EULA note resolved) | ready, downloaded |
+| quran-tanzil-arabic | [Tanzil Quran text](https://tanzil.net/docs/text_license) | Classical Arabic | verbatim copies only, attribution and link required (terms accepted on the owner's instruction, 2026-11-24) | ready, downloaded |
+| english-web-deutero | [WEB Classic with Deuterocanon](https://ebible.org/find/details.php?id=eng-web) | English (Hebrew Bible and New Testament; Deuterocanon is Phase 2) | Public domain | ready, downloaded |
+| german-luther-1912 | [Luther 1912](https://ebible.org/bible/details.php?id=deu1912) | German (Hebrew Bible and New Testament) | Public domain (eBible details page, read 2026-11-24) | ready, downloaded |
 | english-quran-pickthall | [Pickthall 1930](https://commons.wikimedia.org/wiki/File:The_Meaning_of_the_Glorious_Koran_(1930).pdf) (scan, OCR needed) | English | Public domain per Commons and Wikisource, unverified independently | verify |
 | german-quran-henning | [Henning 1901 scan](https://archive.org/details/derkoran00henn) (OCR text available) | German | Translation public domain by author-death rule; scan has no rights metadata | verify |
 | septuagint-first1k | [First1KGreek tlg0527](https://github.com/OpenGreekAndLatin/First1KGreek) | Koine Greek (optional layer) | CC BY-SA 4.0 (repo level) | verify |

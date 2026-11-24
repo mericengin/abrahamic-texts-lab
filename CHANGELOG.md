@@ -10,6 +10,12 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - `requirements.txt` (pdfminer.six, optional, for PDF text).
 - First downloads (owner-approved 2026-11-24): Pickthall 1930 scan (PDF and OCR text), Project Gutenberg #16955 text, and the Henning scan (PDF and OCR text), all from the Internet Archive.
 
+- `scripts/canon.py`, `scripts/make_pdfs.py`, `scripts/ocr_pdf.py`, `scripts/ocr_to_markdown.py`, `scripts/data_report.py` and `docs/data-inventory.md`: parsers for OSIS, MorphGNT, SBLGNT, USFX and Tanzil text; per-book Markdown with a read-back check; generated reading PDFs (Chrome) for Hebrew, Greek and Arabic; Fraktur OCR (Tesseract) with provenance; and an inventory report. Tests in `tests/test_canon.py`.
+- Downloaded the rest of the Phase 1 canon sources (2026-11-24): Hebrew WLC (OSIS), SBLGNT and MorphGNT, World English Bible (USFX and official PDF), Luther 1912 (USFX and official PDF), and Tanzil Uthmani and Simple Clean text.
+
+### Changed
+- SBLGNT text marked `ready` (CC BY 4.0 in the holders' own repository); Luther 1912 marked `ready` (eBible details page reads Public Domain).
+
 ### Found
 - Henning's archive OCR and PDF text layer are unusable (Fraktur misread). A Fraktur OCR is needed.
 - The Pickthall PDF is image-only; its OCR text is good.
