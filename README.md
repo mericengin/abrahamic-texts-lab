@@ -81,7 +81,7 @@ Phase 1 covers:
 |---|---|---|---|
 | Hebrew Bible | Biblical Hebrew | World English Bible | Luther 1912 |
 | New Testament | Koine Greek | World English Bible | Luther 1912 |
-| Qur'an | Classical Arabic | translation to be chosen | Henning 1901 (scan, OCR needed) |
+| Qur'an | Classical Arabic | Pickthall 1930 (scan, OCR needed) | Henning 1901 (scan, OCR needed) |
 
 Why this order: the three canons have clean licenses, three complete language layers, a huge reference literature, and sources already identified. The Dead Sea Scrolls, Nag Hammadi, the Apocrypha and the rest are denser, more fragmentary and harder to source, and will be built on a pipeline already proven in Phase 1. See [ROADMAP.md](ROADMAP.md) for the milestones and checklists.
 
@@ -104,7 +104,7 @@ Every view shows its data source, license, and uncertainty. See [docs/architectu
 
 Fifteen candidate sources are recorded in [SOURCES.md](SOURCES.md) and [data/sources.toml](data/sources.toml), each with its license, a status (`ready`, `verify`, `manual` or `blocked`) and the phase it belongs to. Three license constraints shape the project: some data is **non-commercial only**, some is **ShareAlike**, and the Tanzil Arabic text must be kept **verbatim**. Third-party texts are never committed to this repository; the fetch script retrieves them from their original sources.
 
-Known gaps are stated openly. For Phase 1: an English Qur'an translation with a clear license is still to be chosen, and the German Qur'an exists only as a scan that needs OCR. For Phase 2: there is no clean open edition of the Gospel of Judas yet, only part of Nag Hammadi exists in an open Coptic corpus, and the Dead Sea Scrolls have no free English translation.
+Known gaps are stated openly. For Phase 1: the proposed English (Pickthall 1930) and German (Henning 1901) Qur'an layers exist only as public-domain scans, so they need OCR and proofreading; no ready-made redistributable text exists. For Phase 2: there is no clean open edition of the Gospel of Judas yet, only part of Nag Hammadi exists in an open Coptic corpus, and the Dead Sea Scrolls have no free English translation.
 
 ## Repository layout
 

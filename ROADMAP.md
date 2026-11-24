@@ -73,7 +73,7 @@ Scope: Hebrew Bible, New Testament and Qur'an, each in the original language, En
 |---|---|---|---|
 | Hebrew Bible | Biblical Hebrew (WLC, morphhb) | WEB | Luther 1912 |
 | New Testament | Koine Greek (SBLGNT, MorphGNT) | WEB | Luther 1912 |
-| Qur'an | Classical Arabic (Tanzil, verbatim) | to be chosen (license needed) | Henning 1901 (scan, OCR needed) |
+| Qur'an | Classical Arabic (Tanzil, verbatim) | Pickthall 1930 (scan, OCR needed) | Henning 1901 (scan, OCR needed) |
 
 Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 because many New Testament quotations follow it. Coptic (UD Coptic-Scriptorium biblical slice) is used for R3.
 
@@ -82,8 +82,8 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [ ] Owner approves the first download batch (filenames and sizes listed first)
 - [ ] Fetch the Phase 1 `ready` sources; check provenance records
 - [ ] Resolve the Phase 1 `verify` items: SBLGNT license conflict, Luther 1912 URL, Septuagint edition (confirm Swete or drop)
-- [ ] Choose an English Qur'an translation with a clear license (owner decision)
-- [ ] Obtain and OCR the German Qur'an (Henning 1901 or Rückert 1888), measure OCR quality, correct or flag errors
+- [ ] Owner confirms the English Qur'an layer: Pickthall 1930 (proposed); OCR the public-domain scan, proofread, and map verse numbering
+- [ ] Owner confirms the German Qur'an layer: Henning 1901 (proposed); confirm the edition on the scan's title page, measure OCR quality, proofread, and map verse numbering. Not the Projekt Gutenberg-DE copy (private use only).
 - [ ] Decide the stable identifier scheme (ADR 0001)
 - [ ] Parsers: OSIS (Hebrew), MorphGNT, USFX (WEB, Luther), Tanzil, Septuagint CTS/EpiDoc if kept
 - [ ] Unified schema and database with per-row provenance and license
@@ -227,8 +227,8 @@ Scope: everything in Phase 1 plus the harder texts. No Phase 1 goal is dropped; 
 
 ## Open decisions
 
-1. English Qur'an translation with a clear license (needed in Phase 1).
-2. German Qur'an: Henning 1901, Rückert 1888, or another source, and the OCR approach.
+1. Confirm Pickthall (1930) as the English Qur'an layer (proposed; no ready-made redistributable text, so OCR and proofreading are needed).
+2. Confirm Henning (1901) as the German Qur'an layer, and the OCR and proofreading approach.
 3. Septuagint as an optional Greek layer in Phase 1: keep or drop.
 4. Gospel of Judas: permission, own transcription, or defer (Phase 2).
 5. German and Syriac layers for Phase 2 texts.

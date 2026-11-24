@@ -24,8 +24,8 @@ Third-party texts are not committed to this repository. `scripts/fetch_sources.p
 | quran-tanzil-arabic | [Tanzil Quran text](https://tanzil.net/docs/text_license) | Classical Arabic | verbatim copies only, attribution and link required | manual |
 | english-web-deutero | [WEB Classic with Deuterocanon](https://ebible.org/find/details.php?id=eng-web) | English (Hebrew Bible and New Testament; Deuterocanon is Phase 2) | Public domain | ready |
 | german-luther-1912 | [Luther 1912](https://ebible.org/bible/details.php?id=deu1912) | German (Hebrew Bible and New Testament) | Public domain (not yet opened) | verify |
-| english-quran | none chosen yet | English | unresolved | blocked |
-| german-quran-henning | [Henning 1901 scan](https://archive.org/details/derkoran00henn) | German | Public domain probable, unverified; OCR needed | verify |
+| english-quran-pickthall | [Pickthall 1930](https://commons.wikimedia.org/wiki/File:The_Meaning_of_the_Glorious_Koran_(1930).pdf) (scan, OCR needed) | English | Public domain per Commons and Wikisource, unverified independently | verify |
+| german-quran-henning | [Henning 1901 scan](https://archive.org/details/derkoran00henn) (OCR text available) | German | Translation public domain by author-death rule; scan has no rights metadata | verify |
 | septuagint-first1k | [First1KGreek tlg0527](https://github.com/OpenGreekAndLatin/First1KGreek) | Koine Greek (optional layer) | CC BY-SA 4.0 (repo level) | verify |
 | coptic-ud | [UD Coptic-Scriptorium](https://github.com/UniversalDependencies/UD_Coptic-Scriptorium) | Coptic (R3 biblical slice) | CC BY 4.0 | ready |
 
@@ -45,7 +45,7 @@ Phase 2 also needs sources not yet in the manifest: English translations for Nag
 
 - **Gospel of Judas:** no open Coptic edition found. The one free English text found names no translator and sits on a site with an "all rights reserved" footer. Resolve by asking for permission, transcribing from published images, or deferring.
 - **Nag Hammadi:** only the Gospel of Thomas and Pistis Sophia exist in the open Coptic corpus. Pistis Sophia is not a Nag Hammadi text. Robinson's and Meyer's English translations are copyrighted.
-- **Qur'an translations:** Tanzil translations are non-commercial and each belongs to its translator. Not bundled. An English translation with a clear license is still to be found.
+- **Qur'an translations (Phase 1):** Tanzil translations are non-commercial and not bundled. Proposed layers: **Pickthall 1930** (English) and **Henning 1901** (German). Neither exists as a clean, redistributable machine-readable text, so both need OCR from public-domain scans and proofreading. Do not use the Projekt Gutenberg-DE copy of Henning (private use only, 1970 edition with editorial glosses), Tanzil's Pickthall file (non-commercial, no redistribution) or the Wikisource Pickthall transcription (unproofread, incomplete, CC BY-SA). Yusuf Ali is avoided because its US copyright status is disputed.
 - **Septuagint:** the Rahlfs text is avoided because of a reported TLG-derived license. Swete's edition in First1KGreek is unconfirmed.
 - **Sahidica New Testament:** carries a special license that has not been read. Excluded.
 - **Not yet researched:** Syriac (Peshitta), Greek and Hebrew Apocrypha originals.

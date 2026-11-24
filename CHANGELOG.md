@@ -4,6 +4,9 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Changed
+- Phase 1 Qur'an layers proposed: Pickthall 1930 (English) and Henning 1901 (German), both public-domain translations that need OCR from scans. Replaced the blocked placeholder `english-quran` with `english-quran-pickthall` and rewrote the Henning entry, with the sources and layers to avoid recorded in `SOURCES.md` and the ethics doc.
+
 ## [0.0.2] - 2026-11-24
 
 Planning release. Still no texts downloaded and no analysis run.

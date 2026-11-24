@@ -33,7 +33,8 @@ Phase 1 (the three canons) avoids the non-commercial restriction altogether: the
 - **SBLGNT text:** the Faithlife repository says CC BY 4.0; the MorphGNT README says the text falls under the SBLGNT EULA, which could not be read. Resolve before publishing the text.
 - **Gospel of Judas:** no open Coptic edition; the free English translation found names no translator and sits on a site with an "all rights reserved" footer. Options: ask for permission, transcribe from published images, or defer.
 - **Nag Hammadi English translations** (Robinson, Meyer) are copyrighted and will not be used. Our own translations from Coptic are an option.
-- **Tanzil translations:** each belongs to its translator and is non-commercial; the project does not bundle them.
+- **Tanzil translations:** each belongs to its translator and is non-commercial; the project does not bundle them. That includes Tanzil's Pickthall file.
+- **Qur'an translation layers (Phase 1):** Pickthall (1930, English) and Henning (1901, German) are proposed. Both are old public-domain translations that must be OCRed from scans. The Projekt Gutenberg-DE copy of Henning is private-use only and is not used. The English Wikisource transcription of Pickthall is unproofread, incomplete and CC BY-SA, so it is not used either. Later revised editions of either translation may carry new rights; only the original editions are used.
 - **Rahlfs Septuagint:** avoided because of a reported TLG-derived license.
 
 ## Ethics
