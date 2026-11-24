@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw" / "german-quran-henning-typed"
 H = ROOT / "data" / "processed" / "henning"
-VERSE = re.compile(r"(?<![\d(])(\d{1,3})\.\s+(?:\((\d{1,3})\.\)\s+)?")
+VERSE = re.compile(r"(?<![\d(])(\d{1,3})\.\s*(?:\((\d{1,3})\.\)\s*)?(?=[A-ZÄÖÜ»«„\"(\[]|\s)")
 
 
 def typed_sura(k: int):
@@ -28,10 +28,13 @@ def typed_sura(k: int):
     body = re.sub(r"\s+", " ", body)
     i = body.find("Barmherzigen!")
     body = body[i + 13:] if 0 <= i < 600 else body
+    j = body.find(body[:80], 80)   # the page repeats the chapter (reading mode): keep the first copy
+    if j > 0:
+        body = body[:j]
     verses, nxt, pos, last = {}, 1, 0, None
     for mm in VERSE.finditer(body):
         n = int(mm.group(1))
-        if n == nxt or (nxt < n <= nxt + 2 and mm.group(2)):   # a verse that carries a bracketed number is surely a verse start
+        if n == nxt or (nxt < n <= nxt + 2 and (mm.group(2) or n == nxt + 1)):   # a verse that carries a bracketed number is surely a verse start
             nxt = n
         else:
             continue

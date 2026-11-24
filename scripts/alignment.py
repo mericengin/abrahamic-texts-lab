@@ -18,7 +18,6 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import canon  # noqa: E402
-import henning_align  # noqa: E402
 from verify import NT_USFX, OSIS2USFX  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -107,28 +106,24 @@ def main() -> int:
     nm_path = ROOT / "data" / "processed" / "pickthall" / "pickthall-numbering-map.json"
     nm = json.loads(nm_path.read_text()) if nm_path.exists() else {"printed_number_by_standard_verse": {}, "offset_counts_by_sura": {}}
     printed = nm["printed_number_by_standard_verse"]
-    hn_path = ROOT / "data" / "processed" / "henning" / "numbering.json"
-    hn = json.loads(hn_path.read_text())["suras"] if hn_path.exists() else {}
+    fm_path = ROOT / "data" / "processed" / "henning" / "final-mapping.json"
+    fm = json.loads(fm_path.read_text()) if fm_path.exists() else {}
     qrows = []
     for b in q.books:
         for c, v, _ in b.rows:
             ref = f"{c}:{v}"
-            info = hn.get(str(c))
-            if info is None or int(c) == 1:
-                hp = None                                   # not read, or sura 1, which Henning does not number
-            elif info["henning_highest"] == info["standard_verses"]:
-                hp = [int(v)]                               # same highest number: assumed same numbering (not proven verse by verse)
-            else:
-                hp = henning_align.henning_numbers(int(c), int(v), info["standard_verses"])
+            info = fm.get(str(c))
+            hp = info["map"].get(str(v)) if info and int(c) != 1 else None   # None: sura 1 is unnumbered in Henning, or the verse could not be linked
             qrows.append({"standard": ref, "pickthall_1930_printed": printed.get(ref), "henning_printed": hp})
     shifted = sum(1 for r in qrows if r["pickthall_1930_printed"] is not None and r["pickthall_1930_printed"] != int(r["standard"].split(":")[1]))
     summary["quran"] = {"standard_verses": len(qrows), "with_pickthall_1930_printed_number": sum(1 for r in qrows if r["pickthall_1930_printed"] is not None),
                         "pickthall_printed_number_differs_from_standard": shifted,
                         "pickthall_offsets_by_sura": nm["offset_counts_by_sura"],
                         "henning_verses_mapped": sum(1 for r in qrows if r["henning_printed"] is not None),
-                        "henning": "Henning's own numbers were read from the OCR (scripts/henning_numbering.py): 99 suras have the same highest number as the standard "
-                                   "(mapped by number, not proven verse by verse), 12 suras that divide or join verses were checked by reading (scripts/henning_align.py), "
-                                   "suras 71 and 74 mix splits and merges and are not mapped, sura 1 is unnumbered in Henning. A draft for an expert to confirm."}
+                        "henning": "Henning's numbers per standard verse come from a typed copy of a Reclam edition that prints the standard number in brackets, bridged to our 1901 scan "
+                                   "by text alignment (scripts/henning_typed_align.py). Where the scan and the typed text number their verses alike (107 suras) the typed brackets are read directly; "
+                                   "otherwise the scan verses are aligned to the typed text. Some stretches are settled by verse length between two brackets. Sura 1 is unnumbered in Henning. "
+                                   "A draft for an expert to confirm; the earlier identity mapping was wrong inside many suras and was replaced."}
     (OUT / "quran.json").write_text(json.dumps({"summary": summary["quran"], "rows": qrows}, ensure_ascii=False, indent=0) + "\n", encoding="utf-8")
     (OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     for k, v in summary.items():

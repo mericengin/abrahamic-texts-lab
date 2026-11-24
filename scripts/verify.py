@@ -445,7 +445,7 @@ def verify_mapping() -> None:
     q = summ["quran"]
     check("mapping", "Qur'an: standard numbering to the number printed in the 1930 Pickthall", None,
           f"{q['with_pickthall_1930_printed_number']:,} of {q['standard_verses']:,} verses have a printed 1930 number; {q['pickthall_printed_number_differs_from_standard']} are numbered differently "
-          f"(the 1930 book divides some suras differently; for example sura 10 and sura 38 are one higher, sura 18 shifts by one after verse 19). Henning's own numbering is mapped for 6,092 of 6,236 verses (see below); sura 1, suras 71 and 74, and some later verses of suras 27 and 47 are not mapped.")
+          f"(the 1930 book divides some suras differently; for example sura 10 and sura 38 are one higher, sura 18 shifts by one after verse 19). Henning's own numbering is mapped for 6,211 of 6,236 verses through a typed copy of a Reclam edition (a draft for an expert); sura 1, which Henning does not number, and 18 verses the alignment could not link are not mapped.")
 
 
 SECTIONS = {"hebrew": verify_hebrew, "greek": verify_greek, "usfx": verify_usfx, "quran-arabic": verify_quran_arabic,
