@@ -23,8 +23,9 @@ Abrahamic Texts Lab is a free, non-profit research workspace and public web app 
 9. **No secrets.** No API keys, tokens or account IDs in code, configs, notebooks, tests or fixtures. Use environment variables and keep `.env.example` current.
 10. **Never incur a cost without asking.** Free resources only: no paid plans, upgrades, overages or paid API use unless the owner approves in writing. Prefer local or free models, cap any usage, and cache results.
 11. **No personal data.** Do not put the owner's personal details into requests to outside services, headers, URLs or fixtures.
-12. **Tanzil text stays verbatim and keeps its notice.** Never edit the Arabic text. Every Markdown, PDF or other file made from it carries the copyright notice (the converters do this; keep it that way).
-13. **LLM evaluations need memorization controls** (perturbed verses, obscure or held-out texts, closed-book baselines) before any claim about reasoning (R7 to R9).
+12. **Never trust a transcription because it looks right.** A text that reads well can still be a revised or altered edition (the Project Gutenberg "Pickthall" is not the 1930 text). Verify each layer against an independent source before relying on it, and report the measured accuracy.
+13. **Tanzil text stays verbatim and keeps its notice.** Never edit the Arabic text. Every Markdown, PDF or other file made from it carries the copyright notice (the converters do this; keep it that way).
+14. **LLM evaluations need memorization controls** (perturbed verses, obscure or held-out texts, closed-book baselines) before any claim about reasoning (R7 to R9).
 
 ## Architecture in one paragraph
 
@@ -46,6 +47,7 @@ Layers: sources (raw, untouched) -> parsers -> a unified corpus with stable iden
 - Tests: `python3 -m unittest discover -s tests`
 - Dry-run fetch plan: `python3 scripts/fetch_sources.py` (add `--phase 1` or `--phase 2` to filter)
 - PDFs where the source has none (Hebrew, Greek, Arabic): `python3 scripts/make_pdfs.py` (needs Google Chrome). OCR of scanned PDFs: `python3 scripts/ocr_pdf.py <id> <pdf>` then `python3 scripts/ocr_to_markdown.py <id>` (needs `brew install tesseract poppler` and a model in `.tools/tessdata`). Inventory: `python3 scripts/data_report.py`.
+- Verification: `python3 scripts/verify.py` then `python3 scripts/verify_report.py` (writes `docs/data-verification.md`); mapping tables: `python3 scripts/alignment.py`; Pickthall: `python3 scripts/pickthall_reconcile.py` and `python3 scripts/pickthall_build.py`. Never call a layer trustworthy unless its checks in `docs/data-verification.md` pass.
 - Markdown copies of downloaded sources: `.venv/bin/python scripts/to_markdown.py` (needs `requirements.txt`). Every download gets a Markdown version next to the original; never trust an OCR output without its quality flag.
 - Fetch one source (owner approval required first): `python3 scripts/fetch_sources.py --execute <id>`
 

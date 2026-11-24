@@ -87,8 +87,9 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [x] PDF and Markdown version of every Phase 1 text ([docs/data-guide.md](docs/data-guide.md)); generated PDFs for Hebrew, Greek and Arabic, official PDFs and scans for the rest
 - [x] Owner confirms the English Qur'an layer: Pickthall 1930 (confirmed 2026-11-24)
 - [x] Obtain the Pickthall scan and its OCR text (downloaded 2026-11-24; the PDF is image-only, the archive OCR is good)
-- [ ] Proofread the Pickthall 1930 text against the scan and map its verse numbering (the scan numbers verses differently from the standard count)
-- [ ] Compare the Project Gutenberg #16955 Pickthall lines with the 1930 text and log every wording difference (for example 1:4 "Master" versus "Owner")
+- [x] Rebuild the Pickthall 1930 text from the OCR of four scans by vote (`scripts/pickthall_build.py`): 96% of verses decided by agreement; numbering map built (the 1930 book numbers 483 verses differently from the standard)
+- [ ] Check the 251 queued Pickthall verses (and a random sample of agreed ones) against the page images
+- [x] Compare the Project Gutenberg #16955 Pickthall lines with the 1930 text: they are NOT the 1930 text (593 verses where three or more scans agree on a different wording); the Gutenberg lines are not used
 - [x] Owner confirms the German Qur'an layer: Henning 1901 (confirmed 2026-11-24)
 - [x] Obtain the Henning scan (downloaded 2026-11-24)
 - [x] Fraktur OCR of the Henning scan (the archive's OCR was unusable): all 622 pages with Tesseract, 280 common German words per 1000 raw (329 normalized), raw and normalized Markdown layers with a logged repair list; the front matter shows Henning's own text with a 1901 foreword
@@ -97,9 +98,12 @@ Optional extra layer: the Septuagint (Greek Old Testament), useful for R2 becaus
 - [x] Text parsers: OSIS (Hebrew), MorphGNT, SBLGNT, USFX (WEB, Luther), Tanzil (`scripts/canon.py`, tested, read-back checked)
 - [ ] Septuagint CTS/EpiDoc parser, if the layer is kept
 - [ ] Unified schema and database with per-row provenance and license
-- [ ] Versification mappings (Hebrew and English Bible numbering, Qur'an numbering) documented and tested
-- [ ] Verse alignment across original, English and German for all three canons
-- [ ] Data-quality checks (gaps, duplicates, encoding, versification divergences)
+- [x] Verse mapping tables built and checked (`scripts/alignment.py`): Hebrew to English to German (every English verse reachable except Nehemiah 7:68), Greek to English and German by number, Qur'an standard numbering to the 1930 Pickthall numbering
+- [ ] Expert-confirmed links for the New Testament verses that exist in only one layer (critical-text omissions and differing divisions)
+- [ ] Map Henning's own verse numbering to the standard numbering (after proofreading)
+- [x] Verse alignment of the Hebrew Bible and New Testament across original, English and German (by the tables above)
+- [ ] Verse alignment of the Qur'an German layer (waits for Henning)
+- [x] Data-quality and trust checks (`scripts/verify.py`, report in [docs/data-verification.md](docs/data-verification.md)): independent word-for-word comparisons, verse counts against independent sources, OCR accuracy measured against a page image
 - [ ] Full-text search across all languages
 - [ ] Parallel-reader prototype
 - [ ] **R1 deliverable:** documented, versioned corpus build with a data card

@@ -19,6 +19,7 @@
   <a href="docs/research-questions.md">Research questions</a> ·
   <a href="docs/architecture.md">Architecture</a> ·
   <a href="SOURCES.md">Sources and licenses</a> ·
+  <a href="docs/data-verification.md">Data verification</a> ·
   <a href="docs/licensing-and-ethics.md">Ethics</a> ·
   <a href="CHANGELOG.md">Changelog</a> ·
   <a href="CONTRIBUTING.md">Contributing</a>
@@ -134,6 +135,7 @@ python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python scripts/to_markdown.py            # Markdown for every downloaded source
 python3 scripts/make_pdfs.py                       # reading PDFs for Hebrew, Greek, Arabic (needs Google Chrome)
 python3 scripts/data_report.py                     # refresh docs/data-inventory.md
+python3 scripts/verify.py && python3 scripts/verify_report.py   # trust checks, writes docs/data-verification.md
 ```
 
 Only sources marked `ready` are fetched.

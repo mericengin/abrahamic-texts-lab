@@ -49,10 +49,11 @@ def main() -> int:
     ap.add_argument("--dpi", type=int, default=300)
     ap.add_argument("--psm", type=int, default=6)
     ap.add_argument("--jobs", type=int, default=6)
+    ap.add_argument("--tag", default="", help="suffix for the output folder so a second run does not overwrite the first (e.g. -latf)")
     a = ap.parse_args()
 
     pdf = ROOT / "data" / "raw" / a.source_id / a.pdf
-    outdir = ROOT / "data" / "processed" / "ocr" / a.source_id
+    outdir = ROOT / "data" / "processed" / "ocr" / (a.source_id + a.tag)
     outdir.mkdir(parents=True, exist_ok=True)
     tessdata = ROOT / ".tools" / "tessdata"
     env = {**os.environ, "TESSDATA_PREFIX": str(tessdata), "OMP_THREAD_LIMIT": "1"}
@@ -66,12 +67,12 @@ def main() -> int:
             done += 1
             if done % 50 == 0 or done == pages:
                 print(f"  {done}/{pages} pages", flush=True)
-    model = tessdata / f"{a.lang}.traineddata"
+    models = [tessdata / f"{m}.traineddata" for m in a.lang.split("+")]
     version = subprocess.run(["tesseract", "--version"], capture_output=True, text=True).stdout.splitlines()[0]
     record = {
         "source_id": a.source_id, "pdf": a.pdf, "pdf_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(), "pages": pages,
-        "tesseract": version, "language_model": a.lang, "model_sha256": hashlib.sha256(model.read_bytes()).hexdigest(),
-        "model_source": "https://github.com/tesseract-ocr/tessdata_best (script/Fraktur.traineddata, Apache-2.0)",
+        "tesseract": version, "language_model": a.lang, "model_sha256": "+".join(hashlib.sha256(m.read_bytes()).hexdigest() for m in models),
+        "model_source": "https://github.com/tesseract-ocr/tessdata_best (script/Fraktur.traineddata and deu_latf.traineddata, Apache-2.0)",
         "dpi": a.dpi, "psm": a.psm, "ocr_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "chars_per_page": {str(k): v for k, v in sorted(sizes.items())},
         "empty_pages": [k for k, v in sorted(sizes.items()) if v < 20],

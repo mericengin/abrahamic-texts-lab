@@ -18,7 +18,12 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 - Fresh Fraktur OCR of all 622 Henning pages (Tesseract 5.5.3, Fraktur model), as raw and normalized Markdown with a log of 3,315 repairs; quality 280 (raw) and 329 (normalized) common German words per 1000, against 46 for the archive's OCR.
 
+- Verification suite (`scripts/verify.py`, `scripts/verify_report.py`, `docs/data-verification.md`): independent word-for-word checks of every layer against the raw files and against second sources, plus a trust status per layer. Hebrew, Greek, WEB, Luther and Arabic pass.
+- Verse mapping tables (`scripts/alignment.py`): Hebrew to English to German, Greek to English and German, and Qur'an standard numbering to the 1930 Pickthall numbering.
+- Pickthall 1930 rebuilt from the OCR of four scans (`scripts/pickthall_reconcile.py`, `scripts/pickthall_build.py`); verification-only source `english-quran-pickthall-xcheck` (three more scans, text files only).
+
 ### Found
+- **The Project Gutenberg #16955 "Pickthall" is not the 1930 text** (593 verses differ where three or more scans agree), so it is no longer used.
 - Henning's archive OCR and PDF text layer are unusable (Fraktur misread). A Fraktur OCR is needed.
 - The Pickthall PDF is image-only; its OCR text is good.
 - The Gutenberg #16955 Pickthall lines differ from the 1930 text in places, so they are used only as a scaffold and cross-check.

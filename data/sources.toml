@@ -257,3 +257,22 @@ phase = 1
 status = "verify"
 notes = "Ready-made, verse-aligned Pickthall text, so no OCR is needed for the English layer. Edition of the underlying Pickthall text is unknown (header says re-proofed against paper copies). Verify against the 1930 scan (verse counts, spot checks, diff) before relying on it. Fetched from the Internet Archive mirror because gutenberg.org was down for maintenance on 2026-11-24. The Pickthall-only extraction is a separate derived file; the full conversion keeps all three translations for fidelity and must stay local. DOWNLOADED 2026-11-24 (owner-approved). After repairing four corrupted verse ids in the source (17:33, 39:46, 45:32, 56:26) the Pickthall extraction has 114 suras and 6,236 verses, matching the standard count. HOWEVER its Pickthall lines are not a pure copy of the 1930 text: for example 1:4 reads 'Master of the Day of Judgment' (Yusuf Ali's wording) where the 1930 scan reads 'Owner of the Day of Judgment'. In a seeded 300-verse sample, 77 percent match the scan word for word and 96 percent match at 0.9 similarity or better (the rest is OCR noise or real wording differences). Use it only as a numbering scaffold and cross-check, not as the text."
 
+[[source]]
+id = "english-quran-pickthall-xcheck"
+name = "Pickthall 1930: OCR text of three other scans, used only to cross-check the main scan"
+language = "English"
+kind = "file"
+url = "https://archive.org/details/dli.csl.3756"
+files = [
+  { url = "https://archive.org/download/dli.csl.3756/3756_djvu.txt", filename = "dli.csl.3756_djvu.txt" },
+  { url = "https://archive.org/download/dli.ministry.16944/E02033_The_Meaning_of_the_Glorious_Koran_djvu.txt", filename = "dli.ministry.16944_djvu.txt" },
+  { url = "https://archive.org/download/MN40248ucmf_9/MN40248ucmf_9_djvu.txt", filename = "MN40248ucmf_9_djvu.txt" },
+]
+format = "OCR text of scans (three independent digitizations: two Digital Library of India scans of the George Allen and Unwin printing, and a Knopf microfilm)"
+license = "Public Domain per Wikimedia Commons and Wikisource (same book as english-quran-pickthall); the scans carry no rights metadata"
+license_url = "https://commons.wikimedia.org/wiki/File:The_Meaning_of_the_Glorious_Koran_(1930).pdf"
+attribution = "Marmaduke Pickthall, The Meaning of the Glorious Koran, 1930; Internet Archive items dli.csl.3756, dli.ministry.16944, MN40248ucmf_9"
+phase = 1
+status = "verify"
+notes = "Verification only (small text files, about 1 MB each). Independent OCR readings of the same 1930 edition let verses be voted on: where two or more readings agree, the verse is trusted; where they all differ, it is queued for a check against the page image. Fetched 2026-11-24 as part of the request to make every layer trustworthy."
+
