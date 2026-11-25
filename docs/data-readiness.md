@@ -16,6 +16,10 @@ The nine Phase 1 layers, what each has, and how far it can be trusted. Metadata 
 | 8 | Qur'an, English | Pickthall 1930, rebuilt from four scans | 6,236 | yes / generated | about 99% decided by agreement between scans; 126 verses read against page images; 5,931 of 6,236 verses equal a separately typed digital text apart from its known revisions; 83 verses rest on a vote only (79 of them equal that text) | **Ready with flags** |
 | 9 | Qur'an, German | Henning 1901, OCR of a Fraktur scan with a repair pass | 6,236 (mapped 6,211) | yes / generated | about 1.0% token errors on a fresh random sample of 10 pages (25 in 2,500 words; 0.6% without stray header and junk tokens); 34 of 622 pages read against the scan | **Ready with flags** |
 
+## Extra local layers (not published)
+
+Two clean modern translations from Tanzil were downloaded on 2026-11-25 for analysis and comparison only: German Bubenheim and Elyas (`german-quran-tanzil-bubenheim`) and English Saheeh International (`english-quran-tanzil-saheeh`). Each has 6,236 verses in the standard numbering, the same verse set as the Arabic layer, and no empty verse, so they need no verse mapping. They stay in the git-ignored data folder; Tanzil allows non-commercial use only, forbids redistribution, and the translations are copyrighted. They appear in no PDF, Markdown copy or the app unless the rights holders grant permission.
+
 ## Mapping between layers
 
 - Hebrew to English to German: complete except Nehemiah 7:68, which the Hebrew text lacks.

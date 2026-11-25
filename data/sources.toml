@@ -304,3 +304,31 @@ attribution = "Tanzil Project, Pickthall translation (en.pickthall, last update 
 phase = 1
 status = "manual"
 notes = "Downloaded 2026-11-25 with the owner's approval, for local comparison only: it stays in the git-ignored data/raw and is never copied into the repo, the Markdown layers, the PDFs or the app. It is used only to point at verses where our reconstruction may differ; every difference is judged on the 1930 page image, never by this text. The edition behind it is not stated (a 2010 digital text), so it is not assumed independent of other digital Pickthall texts."
+
+[[source]]
+id = "german-quran-tanzil-bubenheim"
+name = "Tanzil de.bubenheim: Bubenheim and Elyas, modern German translation, LOCAL ONLY"
+language = "German"
+kind = "manual"
+url = "https://tanzil.net/trans/"
+format = "text with sura|verse|text lines (UTF-8), 6,236 verses, standard numbering"
+license = "Tanzil translations page: 'for non-commercial purposes only', otherwise permission from the translator or the publisher is needed; 'Redistributing the following list in another website is not allowed, unless direct permission is granted by the Tanzil Project'; a link back to the page is required when more than three translations are used (read 2026-11-24). The translation itself is a modern copyrighted translation (rights held by its translators or publisher); the Tanzil page names no license for it. Not redistributable here."
+license_url = "https://tanzil.net/trans/"
+attribution = "A. S. F. Bubenheim and N. Elyas, via Tanzil Project (de.bubenheim, last update 17 July 2011)"
+phase = 1
+status = "manual"
+notes = "Downloaded 2026-11-25 with the owner's approval as a LOCAL extra layer for analysis and comparison only: it stays in the git-ignored data/raw and is never copied into the repo, the Markdown layers, the PDFs or the app unless the translator/Tanzil grant permission. Checked: 6,236 verses, same verse set as the Tanzil Arabic text, no empty verse. A modern translation, not Henning or Pickthall."
+
+[[source]]
+id = "english-quran-tanzil-saheeh"
+name = "Tanzil en.sahih: Saheeh International, modern English translation, LOCAL ONLY"
+language = "English"
+kind = "manual"
+url = "https://tanzil.net/trans/"
+format = "text with sura|verse|text lines (UTF-8), 6,236 verses, standard numbering"
+license = "Tanzil translations page: 'for non-commercial purposes only', otherwise permission from the translator or the publisher is needed; 'Redistributing the following list in another website is not allowed, unless direct permission is granted by the Tanzil Project'; a link back to the page is required when more than three translations are used (read 2026-11-24). The translation itself is a modern copyrighted translation (rights held by Saheeh International); the Tanzil page names no license for it. Not redistributable here."
+license_url = "https://tanzil.net/trans/"
+attribution = "Saheeh International, via Tanzil Project (en.sahih, last update 24 April 2011)"
+phase = 1
+status = "manual"
+notes = "Downloaded 2026-11-25 with the owner's approval as a LOCAL extra layer for analysis and comparison only: it stays in the git-ignored data/raw and is never copied into the repo, the Markdown layers, the PDFs or the app unless the translator/Tanzil grant permission. Checked: 6,236 verses, same verse set as the Tanzil Arabic text, no empty verse. A modern translation, not Henning or Pickthall."
