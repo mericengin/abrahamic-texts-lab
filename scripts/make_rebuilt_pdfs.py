@@ -61,7 +61,7 @@ def henning() -> None:
     parts = [f"<html><head><meta charset='utf-8'><title>Der Koran, Max Henning (1901), machine-read text</title><style>{CSS}</style></head><body>",
              "<h1>Der Koran</h1><p>Max Henning, Reclam, Leipzig, 1901. Machine-read text of a scan, page by page.</p>",
              "<div class='box'><b>What this is.</b> OCR of a Fraktur scan (Internet Archive, University of Toronto copy) with an automatic repair pass. It is NOT proofread. "
-             "Word errors are about 1.3 to 2% (measured against a typed copy of another edition and by eye on a random sample); page headers, footnotes and verse numbers are as the OCR read them. "
+             "About 1% of tokens are wrong (by eye on a seeded random sample of 10 pages); page headers, footnotes and verse numbers are as the OCR read them. "
              "Spelling is the 1901 spelling. Use the scan for anything you quote.<br><br><b>License.</b> Henning's translation is public domain in Germany by the author-death rule (Henning died 1927); "
              "the scan carries no rights metadata. This reading copy is made by Abrahamic Texts Lab.</div>"]
     for i in range(1, len(pages), 2):

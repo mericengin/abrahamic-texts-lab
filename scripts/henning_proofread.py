@@ -58,13 +58,14 @@ def candidates(w: str):
     return seen
 
 
-def apply_manual(text: str) -> str:
+def apply_manual(text: str, name: str = "manual-fixes.json") -> str:
     """Corrections made by reading a page image (data/processed/henning/manual-fixes.json, local): {"pages": {"334": [[old, new], ...]}}.
     An old string that is not found is reported, never ignored."""
-    path = ROOT / "data" / "processed" / "henning" / "manual-fixes.json"
+    path = ROOT / "data" / "processed" / "henning" / name
     if not path.exists():
         return text
     fixes = json.loads(path.read_text(encoding="utf-8"))
+    fixes = fixes if "pages" in fixes else {"pages": fixes}
     parts = re.split(r"(?m)^(## Page \d+\n)", text)
     out, missing = [parts[0]], []
     for i in range(1, len(parts), 2):
@@ -127,7 +128,9 @@ def main() -> int:
         return fixed.capitalize() if w[:1].isupper() else fixed
 
     new = WORD.sub(repl, text)
-    new = apply_manual(new)
+    (MD / "german-quran-henning-fraktur-ocr-normalized-latf-pass2-base.md").write_text(new, encoding="utf-8")   # rule repairs only: the base for typed-text proposals
+    new = apply_manual(new, "typed-fixes.json")   # proposals from the local typed text (scripts/henning_typed_fix.py)
+    new = apply_manual(new)                         # fixes made by reading page images win
     new = new.replace('status: "machine OCR, not proofread"', 'status: "machine OCR plus automatic repair pass 2; not proofread by a person"', 1)
     OUT.write_text(new, encoding="utf-8")
     (MD / "CORRECTIONS-pass2.json").write_text(json.dumps({"count": sum(log.values()), "distinct": len(log),

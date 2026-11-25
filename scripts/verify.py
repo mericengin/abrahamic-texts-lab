@@ -435,7 +435,7 @@ def verify_henning() -> None:
         check("henning", "OCR accuracy against a typed copy of a Reclam edition, all 113 suras after the first (local reference, scripts/henning_typed_measure.py)", None,
               f"over {b['typed_words']:,} words, words that differ in an OCR-like way (within two letters): {a['ocr_like_rate_percent']}% before the repair pass and {b['ocr_like_rate_percent']}% after it "
               f"({b['broad_rate_percent']}% with a wider tolerance); a further {b['other_rate_percent']}% of words differ for other reasons (footnotes and headings in one text, "
-              f"compound spelling, and a revised wording in the typed 1970 edition), so the typed text is a reference, not the truth. This agrees with the 1.3% found by eye on a random sample.")
+              f"compound spelling, and a revised wording in the typed 1970 edition), so the typed text is a reference, not the truth. NOTE: since 2026-11-25 the layer also contains corrections proposed from that typed text, so this figure is now optimistic; the independent figures are the by-eye samples (1.3% before those corrections, 1.0% of 2,500 words after them, about 0.6% if stray header and junk tokens are not counted).")
     check("henning", "trustworthiness of the German Qur'an layer", False,
           f"NOT yet trustworthy as text: the best variant measured ({best[0]}, about {best[1]:.1f}% word errors on two sampled pages) still has errors, and nothing has been proofread against the page images. "
           "It is complete (all pages, continuous) and usable for search and reading, but not accurate enough to quote." if best else "No OCR accuracy measurement available.")
