@@ -13,7 +13,7 @@ The nine Phase 1 layers, what each has, and how far it can be trusted. Metadata 
 | 5 | New Testament, English | WEB | 7,957 | yes / official PDF | as above | **Ready** |
 | 6 | New Testament, German | Luther 1912 | 7,957 | yes / official PDF | as above | **Ready** |
 | 7 | Qur'an, Arabic | Tanzil Uthmani, CC BY 3.0, verbatim | 6,236 | yes / generated | text kept verbatim; counts agree with an independent source | **Ready** |
-| 8 | Qur'an, English | Pickthall 1930, rebuilt from four scans | 6,236 | yes / generated | 98% decided by agreement between scans; 91 verses read against page images; 88 rest on a vote only (a fresh OCR confirms all 88); shared slips about 0.5 to 1.5% of verses | **Ready with flags** |
+| 8 | Qur'an, English | Pickthall 1930, rebuilt from four scans | 6,236 | yes / generated | about 99% decided by agreement between scans; 126 verses read against page images; 5,931 of 6,236 verses equal a separately typed digital text apart from its known revisions; 83 verses rest on a vote only (79 of them equal that text) | **Ready with flags** |
 | 9 | Qur'an, German | Henning 1901, OCR of a Fraktur scan with a repair pass | 6,236 (mapped 6,211) | yes / generated | about 1.3 to 2% word errors (typed-copy comparison over 142,723 words, plus a random page sample) | **Ready with flags** |
 
 ## Mapping between layers
@@ -28,7 +28,7 @@ Every view of layers 8 and 9 must say that the text is reconstructed or machine-
 
 ## What would move layers 8 and 9 to fully verified
 
-- Layer 8: reading the 88 vote-only verses and a larger random sample of agreed verses against the page images; an expert review.
+- Layer 8: reading the roughly 300 verses where the typed comparison text differs (a seeded sample of 20 gave 3 slips of ours), plus an expert review.
 - Layer 9: proofreading the pages against the scan (20 of 622 pages read so far), an expert review of the verse mapping, and a decision on whether a typed edition with a suitable license can replace the OCR.
 
 Domain-expert review has not happened for any layer (CLAUDE.md rule 8).

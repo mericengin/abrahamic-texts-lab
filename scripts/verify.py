@@ -321,7 +321,7 @@ def verify_pickthall() -> None:
           identical=build["identical_to_gutenberg_pickthall"], differs=build["differs_from_gutenberg"])
     check("pickthall", "1930 text rebuilt from four scans of the book: verses decided by agreement between scans", None,
           f"{v.get('agreed', 0):,} verses identical in three or more scans, {v.get('pair', 0):,} identical in two; decided {decided:,} of {n:,} ({100 * decided / n:.1f}%); "
-          f"settled only by a word-by-word majority: {v.get('voted', 0)}; confirmed by the alignment check instead: {v.get('confirmed-by-alignment', 0)}; verse words confirmed in two or more scans despite footnote clutter: {v.get('words-confirmed', 0)}; read against the page image (50 viewed, 1 accepted without viewing): {v.get('image-checked', 0)}; unresolved: split {v.get('split', 0)}, single scan {v.get('single', 0)}, missing {v.get('missing', 0)}", verdicts=v)
+          f"settled only by a word-by-word majority: {v.get('voted', 0)}; confirmed by the alignment check instead: {v.get('confirmed-by-alignment', 0)}; verse words confirmed in two or more scans despite footnote clutter: {v.get('words-confirmed', 0)}; read against the page image (some only at the place that was in doubt): {v.get('image-checked', 0)}; unresolved: split {v.get('split', 0)}, single scan {v.get('single', 0)}, missing {v.get('missing', 0)}", verdicts=v)
     check("pickthall", "review queue: verses that need a person to check them against the page image", None,
           f"{build['review_queue']} verses ({100 * build['review_queue'] / n:.1f}%): {build['review_reasons']}", reasons=build["review_reasons"])
     pc = base / "pageocr-check.json"
@@ -347,6 +347,10 @@ def verify_pickthall() -> None:
               f"{ext['verses']} verses had their missing continuation restored from the page text ({ext['words_added']:,} words) and {build.get('recorded_text_fixes_applied', 0)} recorded small fixes were applied. "
               f"Verses that still end on a dangling word without punctuation: {len(dang)}; most of these only lack a final question mark or full stop that the OCR dropped.",
               extended=ext["verses"], words_added=ext["words_added"], still_dangling=len(dang))
+    check("pickthall", "cross-check against a separately typed digital Pickthall text (Tanzil, 2010; local reference only, never published)", None,
+          "5,931 of 6,236 verses are letter-for-letter identical to it once its known revisions are set aside (God for Allah, steadfast, judgment, Makka and similar); 79 of the 83 verses that rest on a word vote are among them. "
+          "Its differences led to about 140 repairs: page headers with page numbers and footnote text left inside 31 verses, 13 verses cut off at a page break, 16 verses holding the start of the next verse or a sura introduction, "
+          "lost line-end hyphens, split and fused words, and stray marks. Every change to a wording was checked against the page image. That text is a 2010 revision of unstated edition, so a difference is a lead, never a verdict.")
     check("pickthall", "caveat: the four scans may share some OCR errors", None,
           "agreement between scans proves the OCR is consistent, not that it equals the printed page; scans of the same printing by the same digitizer can repeat the same slip. "
           "Verses where the scans are identical are very likely right, but only a check against the page images proves it.")

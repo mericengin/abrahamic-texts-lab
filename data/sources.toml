@@ -290,3 +290,17 @@ attribution = "Max Henning, Der Koran (Reclam; the site names the 1970 printing)
 phase = 1
 status = "manual"
 notes = "Downloaded 2026-11-24 with the owner's approval, for local comparison only: it stays in the git-ignored data/raw and is never copied into the repo, the Markdown layers or the app. Used to measure the OCR of the 1901 scan and to read off the standard verse numbers. The site's source is the 1970 printing, which may be a revised text: wording agrees with our 1901 scan (mean similarity 0.966 over 5,192 verses, first 400 letters each, spelling differences included), but its verse division differs from the 1901 scan in at least sura 101."
+
+[[source]]
+id = "english-quran-tanzil-pickthall"
+name = "Tanzil en.pickthall: a 2010 digital Pickthall text, LOCAL COMPARISON ONLY (never published)"
+language = "English"
+kind = "manual"
+url = "https://tanzil.net/trans/"
+format = "text with sura|verse|text lines (UTF-8), 6,236 verses"
+license = "Tanzil translations page: 'for non-commercial purposes only'; 'Redistributing the following list in another website is not allowed, unless direct permission is granted by the Tanzil Project' (read 2026-11-24). Not redistributable here."
+license_url = "https://tanzil.net/trans/"
+attribution = "Tanzil Project, Pickthall translation (en.pickthall, last update 4 September 2010)"
+phase = 1
+status = "manual"
+notes = "Downloaded 2026-11-25 with the owner's approval, for local comparison only: it stays in the git-ignored data/raw and is never copied into the repo, the Markdown layers, the PDFs or the app. It is used only to point at verses where our reconstruction may differ; every difference is judged on the 1930 page image, never by this text. The edition behind it is not stated (a 2010 digital text), so it is not assumed independent of other digital Pickthall texts."
